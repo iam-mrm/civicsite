@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+
+const seoProps = generateSEOProps({
+  title: 'Server Error - Civic Portal',
+  description: 'We encountered an unexpected error. Please try again later.'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      
+      <!-- Error Graphic -->
+      <div class="text-8xl md:text-9xl font-bold text-red-600 mb-8">500</div>
+      
+      <!-- Error Message -->
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Server Error</h1>
+      <p class="text-xl text-slate-600 mb-8">
+        Something went wrong on our end. Our team has been notified and is working to fix it.
+      </p>
+      
+      <!-- Error Details -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 mb-8">
+        <h2 class="text-xl font-semibold text-slate-900 mb-4">What happened?</h2>
+        <div class="text-left space-y-4">
+          <div class="flex items-start space-x-3">
+            <span class="text-2xl">🔧</span>
+            <div>
+              <h3 class="font-medium text-slate-900 mb-1">Technical Issue</h3>
+              <p class="text-sm text-slate-600">Our servers encountered an unexpected issue while processing your request.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-2xl">👨‍🔧</span>
+            <div>
+              <h3 class="font-medium text-slate-900 mb-1">We're On It</h3>
+              <p class="text-sm text-slate-600">Our technical team has been automatically notified and is investigating.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-2xl">⏰</span>
+            <div>
+              <h3 class="font-medium text-slate-900 mb-1">Usually Quick</h3>
+              <p class="text-sm text-slate-600">Most issues are resolved within a few minutes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <button 
+          onclick="window.location.reload()"
+          class="px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+        >
+          Try Again
+        </button>
+        <a 
+          href="/" 
+          class="px-8 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors"
+        >
+          Go Home
+        </a>
+      </div>
+      
+      <!-- Status Check -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <p class="text-amber-900 mb-3">
+          <strong>Check System Status</strong>
+        </p>
+        <p class="text-amber-700 text-sm mb-4">
+          See if there are any ongoing issues affecting our services.
+        </p>
+        <a 
+          href="#" 
+          class="inline-block px-6 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
+        >
+          View Status Page
+        </a>
+      </div>
+
+    </div>
+  </main>
+</Layout>

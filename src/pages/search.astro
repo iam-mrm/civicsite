@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { lifeEvents } from '../data/lifeEvents';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+import { toTitleCase } from '../utils/formatting';
+
+export async function GET({ url }: { url: URL }) {
+  const searchParams = url.searchParams;
+  const query = searchParams.get('q') || '';
+  
+  // Simple search implementation
+  const results = lifeEvents.filter(event => 
+    event.title.toLowerCase().includes(query.toLowerCase()) ||
+    event.description.toLowerCase().includes(query.toLowerCase()) ||
+    event.category?.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return new Response(
+    JSON.stringify({ results, query }),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+}
+
+const seoProps = generateSEOProps({
+  title: 'Search - Civic Portal',
+  description: 'Search for civic services and life events.'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-4xl mx-auto px-6 py-16">
+      
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div class="text-5xl mb-4">🔍</div>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Search Services</h1>
+        <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+          Find the right services and information for your needs.
+        </p>
+      </div>
+
+      <!-- Search Form -->
+      <section class="mb-12">
+        <form id="searchForm" class="max-w-2xl mx-auto">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="searchInput"
+              name="q"
+              placeholder="Search for services, life events, or topics..."
+              class="w-full px-6 py-5 text-lg rounded-2xl shadow-lg border-2 border-transparent focus:border-indigo-400 focus:outline-none transition-all pr-16"
+            />
+            <button 
+              type="submit"
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors font-medium"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Popular Searches -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Popular Searches</h2>
+        <div class="flex flex-wrap gap-3">
+          {[
+            'birth certificate',
+            'marriage license',
+            'business registration',
+            'property deed',
+            'moving address change',
+            'unemployment benefits',
+            'retirement planning',
+            'health insurance'
+          ].map((term) => (
+            <button 
+              class="px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-700 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+              onclick="document.getElementById('searchInput').value = this.textContent; document.getElementById('searchForm').dispatchEvent(new Event('submit'))"
+            >
+              {term}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <!-- Search Results -->
+      <section id="searchResults" class="hidden">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Search Results</h2>
+        <div id="resultsContainer" class="space-y-6">
+          <!-- Results will be populated here -->
+        </div>
+      </section>
+
+      <!-- No Results -->
+      <section id="noResults" class="hidden text-center py-12">
+        <div class="text-5xl mb-4">🔍</div>
+        <h3 class="text-xl font-semibold text-slate-900 mb-2">No Results Found</h3>
+        <p class="text-slate-600 mb-6">Try different keywords or browse our life events categories.</p>
+        <a href="/life-events" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
+          Browse All Services
+        </a>
+      </section>
+
+      <!-- Browse by Category -->
+      <section class="mt-16">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Browse by Category</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { category: 'family', icon: '👨‍👩‍👧‍👦', count: 3 },
+            { category: 'housing', icon: '🏠', count: 2 },
+            { category: 'business', icon: '💼', count: 1 },
+            { category: 'career', icon: '📋', count: 1 },
+            { category: 'retirement', icon: '🌅', count: 1 },
+            { category: 'health', icon: '🏥', count: 1 }
+          ].map((cat) => (
+            <a 
+              href={`/life-events?category=${cat.category}`}
+              class="bg-white rounded-xl p-6 border border-slate-100 hover:border-indigo-200 transition-colors group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-3xl">{cat.icon}</span>
+                <span class="text-sm text-slate-500">{cat.count} services</span>
+              </div>
+              <h3 class="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                {toTitleCase(cat.category)}
+              </h3>
+            </a>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    let searchTimeout: number;
+
+    async function performSearch(query: string) {
+      if (query.length < 2) {
+        document.getElementById('searchResults')?.classList.add('hidden');
+        document.getElementById('noResults')?.classList.add('hidden');
+        return;
+      }
+
+      try {
+        const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        
+        displayResults(data.results, data.query);
+      } catch (error) {
+        console.error('Search error:', error);
+      }
+    }
+
+    function displayResults(results: any[], query: string) {
+      const resultsContainer = document.getElementById('resultsContainer');
+      const searchResults = document.getElementById('searchResults');
+      const noResults = document.getElementById('noResults');
+
+      if (results.length === 0) {
+        searchResults?.classList.add('hidden');
+        noResults?.classList.remove('hidden');
+        return;
+      }
+
+      searchResults?.classList.remove('hidden');
+      noResults?.classList.add('hidden');
+
+      if (resultsContainer) {
+        resultsContainer.innerHTML = results.map(result => `
+          <div class="bg-white rounded-xl p-6 border border-slate-100 hover:border-indigo-200 transition-colors">
+            <div class="flex items-start gap-4">
+              <div class="text-4xl">${result.emoji}</div>
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-slate-900 mb-2">
+                  <a href="/life-events/${result.slug}" class="hover:text-indigo-600 transition-colors">
+                    ${result.title}
+                  </a>
+                </h3>
+                <p class="text-slate-600 mb-3">${result.description}</p>
+                <div class="flex items-center gap-4 text-sm">
+                  <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">
+                    ${result.category}
+                  </span>
+                  <span class="text-slate-500">${result.services?.length || 0} services available</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Search form submission
+    document.getElementById('searchForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = (document.getElementById('searchInput') as HTMLInputElement).value;
+      performSearch(query);
+    });
+
+    // Real-time search with debounce
+    document.getElementById('searchInput')?.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      const query = (e.target as HTMLInputElement).value;
+      
+      searchTimeout = window.setTimeout(() => {
+        performSearch(query);
+      }, 300);
+    });
+  </script>
+</Layout>

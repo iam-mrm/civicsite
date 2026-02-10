@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { lifeEvents, getAllCategories } from '../../data/lifeEvents';
+import { siteConfig } from '../../data/siteConfig';
+import LifeEventCard from '../../components/LifeEventCard.astro';
+
+const categories = getAllCategories();
+---
+
+<Layout title={`Life Events - ${siteConfig.title}`}>
+  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Life Events</h1>
+        <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+          Find the right services and guidance for every important moment in your life.
+        </p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <button class="px-6 py-2 bg-indigo-600 text-white rounded-full font-medium transition-colors">
+          All Events
+        </button>
+        {categories.map((category) => (
+          <button class="px-6 py-2 bg-white text-slate-700 rounded-full font-medium hover:bg-slate-100 transition-colors border border-slate-200">
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <!-- Events Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {lifeEvents.map((event) => (
+          <a href={`/life-events/${event.slug}`} class="block group">
+            <LifeEventCard
+              emoji={event.emoji}
+              title={event.title}
+              description={event.description}
+              linkText="Learn more →"
+            />
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,105 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: 'Guide', icon: '🏠' },
+  { href: '/guidance', label: 'Get Help', icon: '🎯' },
+  { href: '/resources', label: 'Resources', icon: '�' },
+  { href: '/contact', label: 'Contact', icon: '�' }
+];
+---
+
+<!-- Mobile Menu Button -->
+<button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+</button>
+
+<!-- Navigation -->
+<nav id="navigation" class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-40 transform -translate-y-full md:translate-y-0 transition-transform duration-300">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between py-4">
+      
+      <!-- Logo -->
+      <div class="flex items-center justify-between md:justify-start mb-4 md:mb-0">
+        <a href="/" class="flex items-center space-x-2 text-xl font-light text-gray-900">
+          <span class="text-2xl">🏛️</span>
+          <span>Civic Guide</span>
+        </a>
+        <button id="closeMobileMenu" class="md:hidden p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Navigation -->
+      <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-8">
+        {navItems.map((item) => (
+          <a 
+            href={item.href} 
+            class={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+              currentPath === item.href 
+                ? 'bg-blue-100 text-blue-700' 
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+          >
+            <span class="text-lg">{item.icon}</span>
+            <span class="font-medium">{item.label}</span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Quick Help -->
+      <div class="hidden md:flex items-center">
+        <a 
+          href="/contact" 
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+        >
+          Get Help Now
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed nav -->
+<div class="h-16 md:h-20"></div>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobileMenuButton');
+  const closeMobileMenu = document.getElementById('closeMobileMenu');
+  const navigation = document.getElementById('navigation');
+
+  function openMenu() {
+    navigation?.classList.remove('-translate-y-full');
+    navigation?.classList.add('translate-y-0');
+  }
+
+  function closeMenu() {
+    navigation?.classList.add('-translate-y-full');
+    navigation?.classList.remove('translate-y-0');
+  }
+
+  mobileMenuButton?.addEventListener('click', openMenu);
+  closeMobileMenu?.addEventListener('click', closeMenu);
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (navigation && !navigation.contains(e.target as Node) && !mobileMenuButton?.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+    }
+  });
+</script>

@@ -1,0 +1,467 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+
+const { url } = Astro.request;
+const urlObj = new URL(url);
+const intent = urlObj.searchParams.get('intent') || '';
+
+const guidanceData = {
+  'Starting a Family': {
+    title: 'Starting or Growing Your Family',
+    description: 'Here\'s what you need to know about birth certificates, marriage licenses, and family support services.',
+    whatToExpect: [
+      'Multiple government agencies may be involved',
+      'Processing times vary by service type',
+      'Some services require in-person visits',
+      'Keep copies of all documents for your records'
+    ],
+    keyDocuments: [
+      'Photo ID (driver\'s license or state ID)',
+      'Social Security cards',
+      'Birth certificates',
+      'Proof of residence (utility bills, lease)',
+      'Marriage certificate (if applicable)'
+    ],
+    officialPortals: [
+      {
+        name: 'Vital Records',
+        url: 'https://www.cdc.gov/nchs/w.htm',
+        description: 'Birth, death, marriage certificates'
+      },
+      {
+        name: 'Social Security Administration',
+        url: 'https://www.ssa.gov/',
+        description: 'Social Security cards, benefits, name changes'
+      },
+      {
+        name: 'Health Insurance Marketplace',
+        url: 'https://www.healthcare.gov/',
+        description: 'Health insurance for families'
+      },
+      {
+        name: 'WIC Program',
+        url: 'https://www.fns.usda.gov/wic/',
+        description: 'Nutrition assistance for families'
+      }
+    ],
+    stepByStep: [
+      {
+        step: 1,
+        title: 'Gather Your Documents',
+        description: 'Collect all necessary identification and supporting documents before starting any application.',
+        tips: [
+          'Make photocopies of everything',
+          'Get documents notarized if required',
+          'Check expiration dates on IDs',
+          'Keep originals in a safe place'
+        ]
+      },
+      {
+        step: 2,
+        title: 'Start with Birth Records',
+        description: 'Birth certificates are foundational for most family-related services.',
+        tips: [
+          'Order from the state where born',
+          'Allow 2-3 weeks for processing',
+          'Consider expedited service if needed quickly',
+          'Verify all information before submitting'
+        ]
+      },
+      {
+        step: 3,
+        title: 'Marriage Services (If Applicable)',
+        description: 'Marriage licenses are required before marriage ceremonies.',
+        tips: [
+          'Check waiting period requirements in your state',
+          'Both partners must appear in person',
+          'Bring valid photo identification',
+          'Consider blood test requirements'
+        ]
+      },
+      {
+        step: 4,
+        title: 'Update Social Security Records',
+        description: 'Update your name and address after major life events.',
+        tips: [
+          'Visit local SSA office or use online services',
+          'Bring marriage certificate for name changes',
+          'Update beneficiary information',
+          'Keep confirmation letters'
+        ]
+      }
+    ]
+  },
+  'Moving or Relocating': {
+    title: 'Moving to a New Home',
+    description: 'Complete guide to address changes, utility transfers, and voter registration when relocating.',
+    whatToExpect: [
+      'Change address with multiple agencies',
+      'Transfer or setup new utility services',
+      'Update voter registration',
+      'Forward mail and update subscriptions',
+      'Consider tax implications of your move'
+    ],
+    keyDocuments: [
+      'Current photo ID',
+      'Proof of new address (lease, utility bill)',
+      'Vehicle registration (if moving with car)',
+      'School records (if moving with children)',
+      'Moving company quote or receipt'
+    ],
+    officialPortals: [
+      {
+        name: 'USPS Change of Address',
+        url: 'https://www.moversguide.usps.com/move/change-address',
+        description: 'Official mail forwarding service'
+      },
+      {
+        name: 'DMV Address Update',
+        url: 'https://www.dmv.org/',
+        description: 'Driver\'s license and vehicle registration'
+      },
+      {
+        name: 'Voter Registration',
+        url: 'https://www.vote.gov/',
+        description: 'Register to vote in your new location'
+      },
+      {
+        name: 'Utility Transfer Services',
+        url: 'https://www.utilitytransfer.org/',
+        description: 'Connect utilities at your new address'
+      }
+    ],
+    stepByStep: [
+      {
+        step: 1,
+        title: 'Plan Your Move Timeline',
+        description: 'Create a moving checklist and timeline 8 weeks before your move.',
+        tips: [
+          'Schedule utilities disconnection/connection',
+          'Arrange mail forwarding 2 weeks before',
+          'Research schools and healthcare in new area',
+          'Create inventory of belongings'
+        ]
+      },
+      {
+        step: 2,
+        title: 'File Change of Address',
+        description: 'Submit official change of address forms with USPS and government agencies.',
+        tips: [
+          'Use online USPS change of address form',
+          'Update driver\'s license within 30 days',
+          'Notify banks, credit cards, insurance',
+          'Update voter registration immediately'
+        ]
+      },
+      {
+        step: 3,
+        title: 'Transfer Utilities and Services',
+        description: 'Schedule utility disconnections and connections around your move dates.',
+        tips: [
+          'Contact current providers 2 weeks ahead',
+          'Schedule final meter readings',
+          'Arrange internet/cable installation',
+          'Transfer medical records to new providers'
+        ]
+      },
+      {
+        step: 4,
+        title: 'Complete Local Registration',
+        description: 'Register with new local services and update your records.',
+        tips: [
+          'Register to vote in new precinct',
+          'Find new healthcare providers',
+          'Enroll children in new schools',
+          'Get new library cards and local memberships'
+        ]
+      }
+    ]
+  },
+  'Starting a Business': {
+    title: 'Starting Your Own Business',
+    description: 'Everything you need to know about business registration, licenses, and compliance requirements.',
+    whatToExpect: [
+      'Multiple levels of government registration',
+      'Industry-specific licensing requirements',
+      'Tax identification numbers needed',
+      'Regular compliance reporting required',
+      'Processing times vary by business type'
+    ],
+    keyDocuments: [
+      'Business plan and structure documents',
+      'Personal identification for all owners',
+      'Social Security numbers or ITINs',
+      'Formation documents (articles of incorporation)',
+      'Professional licenses or certifications',
+      'Commercial lease or property deed'
+    ],
+    officialPortals: [
+      {
+        name: 'Business Registration (IRS)',
+        url: 'https://www.irs.gov/businesses',
+        description: 'EIN application and business tax information'
+      },
+      {
+        name: 'Small Business Administration',
+        url: 'https://www.sba.gov/',
+        description: 'Business guidance, loans, and resources'
+      },
+      {
+        name: 'State Business Registration',
+        url: 'https://www.business.gov/',
+        description: 'State-level business registration portal'
+      },
+      {
+        name: 'Business License Portal',
+        url: 'https://www.licenses.gov/',
+        description: 'Federal and state licensing requirements'
+      }
+    ],
+    stepByStep: [
+      {
+        step: 1,
+        title: 'Choose Your Business Structure',
+        description: 'Decide between sole proprietorship, LLC, corporation, or partnership.',
+        tips: [
+          'Consult with a business attorney',
+          'Consider liability protection needs',
+          'Understand tax implications',
+          'Research industry requirements'
+        ]
+      },
+      {
+        step: 2,
+        title: 'Register Your Business Name',
+        description: 'Register your business name and check for trademark conflicts.',
+        tips: [
+          'Search business name database',
+          'Consider registering trademark',
+          'Check domain name availability',
+          'Reserve social media handles'
+        ]
+      },
+      {
+        step: 3,
+        title: 'Obtain Federal Tax ID',
+        description: 'Apply for Employer Identification Number (EIN) from the IRS.',
+        tips: [
+          'Apply online for immediate EIN',
+          'Keep EIN confirmation letter',
+          'No cost to obtain EIN',
+          'Required for bank account opening'
+        ]
+      },
+      {
+        step: 4,
+        title: 'Complete State Registration',
+        description: 'Register with your state and obtain necessary business licenses.',
+        tips: [
+          'Check local licensing requirements',
+          'Register for state tax accounts',
+          'Obtain necessary permits and certifications',
+          'Open business bank account'
+        ]
+      }
+    ]
+  }
+};
+
+const currentGuidance = guidanceData[intent as keyof typeof guidanceData] || null;
+
+const seoProps = generateSEOProps({
+  title: currentGuidance ? `${currentGuidance.title} - Civic Guide` : 'Civic Guidance',
+  description: currentGuidance?.description || 'Get guidance for navigating government services'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-white">
+    
+    {currentGuidance ? (
+      <div>
+        <!-- Header -->
+        <section class="px-6 py-12 max-w-4xl mx-auto">
+          <div class="mb-8">
+            <a href="/" class="text-blue-600 hover:text-blue-700 mb-4 inline-block">
+              ← Back to Guide
+            </a>
+            <h1 class="text-3xl md:text-4xl font-light text-gray-900 mb-4">
+              {currentGuidance.title}
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed">
+              {currentGuidance.description}
+            </p>
+          </div>
+        </section>
+
+        <!-- What to Expect -->
+        <section class="bg-blue-50 py-12">
+          <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-light text-gray-900 mb-8">What to Expect</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Key Points</h3>
+                <ul class="space-y-3">
+                  {currentGuidance.whatToExpect.map((point) => (
+                    <li class="flex items-start">
+                      <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 0116 0zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 7.707a1 1 0 00-1.414 0L10 10.586l3.293 3.293a1 1 0 001.414 1.414l-4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-700">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Timeline</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      1
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">Preparation</div>
+                      <div class="text-sm text-gray-600">1-2 weeks</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      2
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">Applications</div>
+                      <div class="text-sm text-gray-600">2-4 weeks</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      3
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">Processing</div>
+                      <div class="text-sm text-gray-600">1-3 weeks</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      ✓
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">Completion</div>
+                      <div class="text-sm text-gray-600">Documents received</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Documents -->
+        <section class="py-12">
+          <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-light text-gray-900 mb-8">Key Documents You'll Need</h2>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-6">
+              <div class="flex items-start mb-4">
+                <svg class="w-6 h-6 text-amber-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 2.722 0 003.093.736 1.36 1.36 1.36 0 001.36-1.36V5.36c0-1.357.895-1.36 1.36-1.36H5.36c-1.357 0-1.36.895-1.36-1.36v6.36c0 1.357.895 1.36 1.36 1.36h1.36c1.357 0 1.36.895 1.36 1.36v6.36c0 1.357-.895 1.36-1.36 1.36zm0 9.36c0 1.357-.895 1.36-1.36 1.36H5.36c-1.357 0-1.36.895-1.36-1.36v6.36c0 1.357.895 1.36 1.36 1.36h1.36c1.357 0 1.36.895 1.36 1.36v6.36c0 1.357.895 1.36-1.36 1.36 1.36z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <h3 class="font-medium text-gray-900 mb-2">Before You Start</h3>
+                  <p class="text-gray-700 text-sm">Gather these documents to avoid delays:</p>
+                </div>
+              </div>
+              <ul class="space-y-2">
+                {currentGuidance.keyDocuments.map((doc) => (
+                  <li class="flex items-start">
+                    <svg class="w-4 h-4 text-amber-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 0116 0zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 7.707a1 1 0 00-1.414 0L10 10.586l3.293 3.293a1 1 0 001.414 1.414l-4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-gray-700">{doc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Official Portals -->
+        <section class="bg-gray-50 py-12">
+          <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-light text-gray-900 mb-8">Official Government Portals</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+              {currentGuidance.officialPortals.map((portal) => (
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                  <h3 class="font-medium text-gray-900 mb-2">{portal.name}</h3>
+                  <p class="text-gray-600 text-sm mb-4">{portal.description}</p>
+                  <a 
+                    href={portal.url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Visit Official Site
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2h-4zm4 0h4v16m0 0l4-4m-4 4h4" />
+                    </svg>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- Step by Step Guide -->
+        <section class="py-12">
+          <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-light text-gray-900 mb-8">Step-by-Step Guide</h2>
+            <div class="space-y-8">
+              {currentGuidance.stepByStep.map((step) => (
+                <div class="flex items-start">
+                  <div class="shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg mr-6">
+                    {step.step}
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-xl font-medium text-gray-900 mb-2">{step.title}</h3>
+                    <p class="text-gray-600 mb-4">{step.description}</p>
+                    <div class="bg-blue-50 rounded-xl p-4">
+                      <h4 class="font-medium text-blue-900 mb-2">Pro Tips:</h4>
+                      <ul class="space-y-2">
+                        {step.tips.map((tip) => (
+                          <li class="flex items-start">
+                            <svg class="w-4 h-4 text-blue-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 001-1v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-blue-800 text-sm">{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    ) : (
+      <!-- No Intent Found -->
+      <div class="px-6 py-12 max-w-4xl mx-auto text-center">
+        <div class="text-6xl mb-4">🤔</div>
+        <h1 class="text-3xl font-light text-gray-900 mb-4">No Guidance Found</h1>
+        <p class="text-xl text-gray-600 mb-8">
+          Please select an option from the homepage to get started.
+        </p>
+        <a 
+          href="/" 
+          class="inline-block px-8 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+        >
+          Return to Guide
+        </a>
+      </div>
+    )}
+
+  </main>
+</Layout>

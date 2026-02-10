@@ -1,0 +1,18 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "Confused about Government Services? <span class='text-green-600'>We're here to help!</span>",
+  subtitle = "Getting birth certificates, paying property tax, or applying for schemes shouldn't be complicated. We explain everything in simple terms that anyone can understand."
+} = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+  <div class="text-center mb-16">
+    <h1 class="text-5xl md:text-6xl font-bold text-slate-900 mb-6" set:html={title} />
+    <p class="text-xl text-slate-600 max-w-2xl mx-auto">{subtitle}</p>
+  </div>
+</section>

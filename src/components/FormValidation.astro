@@ -1,0 +1,201 @@
+---
+interface Props {
+  formId: string;
+  rules?: Record<string, string[]>;
+}
+
+const { formId, rules = {} } = Astro.props;
+
+// Default validation rules
+const defaultRules = {
+  required: ['This field is required'],
+  email: ['Please enter a valid email address'],
+  phone: ['Please enter a valid phone number'],
+  minLength: ['Must be at least {min} characters'],
+  maxLength: ['Must be no more than {max} characters']
+};
+---
+
+<script define:vars={{ formId, rules, defaultRules }}>
+  class FormValidator {
+    constructor(formId, rules, defaultRules) {
+      this.formId = formId;
+      this.rules = { ...defaultRules, ...rules };
+      this.form = document.getElementById(formId);
+      this.errors = {};
+      
+      if (this.form) {
+        this.setupValidation();
+      }
+    }
+
+    setupValidation() {
+      // Real-time validation on input
+      this.form?.addEventListener('input', (e) => {
+        this.validateField(e.target);
+      });
+
+      // Validate on blur
+      this.form?.addEventListener('blur', (e) => {
+        this.validateField(e.target);
+      }, true);
+
+      // Validate on submit
+      this.form?.addEventListener('submit', (e) => {
+        if (!this.validateForm()) {
+          e.preventDefault();
+          this.showErrors();
+        }
+      });
+    }
+
+    validateField(field) {
+      const fieldName = field.name;
+      const fieldValue = field.value.trim();
+      const fieldRules = this.rules[fieldName] || [];
+      let fieldErrors = [];
+
+      // Required validation
+      if (fieldRules.includes('required') && !fieldValue) {
+        fieldErrors.push('This field is required');
+      }
+
+      // Email validation
+      if (fieldRules.includes('email') && fieldValue) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(fieldValue)) {
+          fieldErrors.push('Please enter a valid email address');
+        }
+      }
+
+      // Phone validation
+      if (fieldRules.includes('phone') && fieldValue) {
+        const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!phoneRegex.test(fieldValue)) {
+          fieldErrors.push('Please enter a valid phone number');
+        }
+      }
+
+      // Min length validation
+      const minLengthRule = fieldRules.find(rule => rule.startsWith('minLength:'));
+      if (minLengthRule) {
+        const minLength = parseInt(minLengthRule.split(':')[1]);
+        if (fieldValue.length < minLength) {
+          fieldErrors.push(`Must be at least ${minLength} characters`);
+        }
+      }
+
+      // Max length validation
+      const maxLengthRule = fieldRules.find(rule => rule.startsWith('maxLength:'));
+      if (maxLengthRule) {
+        const maxLength = parseInt(maxLengthRule.split(':')[1]);
+        if (fieldValue.length > maxLength) {
+          fieldErrors.push(`Must be no more than ${maxLength} characters`);
+        }
+      }
+
+      // Store errors
+      if (fieldErrors.length > 0) {
+        this.errors[fieldName] = fieldErrors;
+        this.showFieldError(field, fieldErrors);
+      } else {
+        delete this.errors[fieldName];
+        this.clearFieldError(field);
+      }
+
+      return fieldErrors.length === 0;
+    }
+
+    validateForm() {
+      if (!this.form) return false;
+
+      const fields = this.form.querySelectorAll('input, select, textarea');
+      let isValid = true;
+
+      fields.forEach(field => {
+        if (!this.validateField(field)) {
+          isValid = false;
+        }
+      });
+
+      return isValid;
+    }
+
+    showFieldError(field, errors) {
+      this.clearFieldError(field);
+      
+      field.classList.add('border-red-500', 'focus:ring-red-500');
+      field.classList.remove('border-slate-300', 'focus:ring-indigo-500');
+
+      const errorContainer = document.createElement('div');
+      errorContainer.className = 'mt-1 text-sm text-red-600 field-error';
+      errorContainer.innerHTML = errors[0];
+      
+      field.parentNode?.insertBefore(errorContainer, field.nextSibling);
+    }
+
+    clearFieldError(field) {
+      field.classList.remove('border-red-500', 'focus:ring-red-500');
+      field.classList.add('border-slate-300', 'focus:ring-indigo-500');
+
+      const errorContainer = field.parentNode?.querySelector('.field-error');
+      if (errorContainer) {
+        errorContainer.remove();
+      }
+    }
+
+    showErrors() {
+      // Show summary of errors
+      const errorKeys = Object.keys(this.errors);
+      if (errorKeys.length > 0) {
+        const firstErrorField = document.querySelector(`[name="${errorKeys[0]}"]`);
+        firstErrorField?.focus();
+        
+        // Show toast notification
+        this.showToast(`Please fix ${errorKeys.length} error(s) before submitting.`);
+      }
+    }
+
+    showToast(message) {
+      // Remove existing toast
+      const existingToast = document.querySelector('.validation-toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      // Create new toast
+      const toast = document.createElement('div');
+      toast.className = 'validation-toast fixed top-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+      toast.textContent = message;
+      
+      document.body.appendChild(toast);
+
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+  }
+
+  // Initialize validator when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    new FormValidator(formId, rules, defaultRules);
+  });
+</script>
+
+<style>
+  .validation-toast {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>

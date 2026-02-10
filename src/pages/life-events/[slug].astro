@@ -1,0 +1,210 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLifeEventBySlug } from '../../data/lifeEvents';
+import { siteConfig } from '../../data/siteConfig';
+import { generateSEOProps, generateBreadcrumbData } from '../../utils/seo';
+import { toTitleCase } from '../../utils/formatting';
+import type { LifeEvent } from '../../types';
+
+export async function getStaticPaths() {
+  const { lifeEvents } = await import('../../data/lifeEvents');
+  
+  return lifeEvents.map((event: LifeEvent) => ({
+    params: { slug: event.slug },
+    props: { event }
+  }));
+}
+
+const { event } = Astro.props;
+
+if (!event) {
+  return Astro.redirect('/404');
+}
+
+const seoProps = generateSEOProps({
+  title: `${event.title} - ${siteConfig.title}`,
+  description: event.description
+});
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Life Events', url: '/life-events' },
+  { name: event.title, url: `/life-events/${event.slug}` }
+];
+
+const structuredData = generateBreadcrumbData(breadcrumbs);
+---
+
+<Layout title={seoProps.title || ''}>
+  <script define:vars={{ structuredData }} type="application/ld+json" set:html={structuredData} />
+  
+  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-4xl mx-auto px-6 py-16">
+      
+      <!-- Breadcrumb -->
+      <nav class="mb-8">
+        <ol class="flex items-center space-x-2 text-sm text-slate-600">
+          {breadcrumbs.map((crumb, index) => (
+            <li class="flex items-center">
+              {index > 0 && <span class="mx-2">/</span>}
+              {index < breadcrumbs.length - 1 ? (
+                <a href={crumb.url} class="hover:text-indigo-600 transition-colors">
+                  {crumb.name}
+                </a>
+              ) : (
+                <span class="text-slate-900 font-medium">{crumb.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <!-- Event Header -->
+      <div class="text-center mb-12">
+        <div class="text-6xl mb-6">{event.emoji}</div>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">{event.title}</h1>
+        <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-6">{event.description}</p>
+        <div class="flex items-center justify-center space-x-4 text-sm text-slate-500">
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full font-medium">
+            {toTitleCase(event.category || 'general')}
+          </span>
+          <span>{event.services?.length || 0} Services Available</span>
+        </div>
+      </div>
+
+      <!-- Services Section -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-slate-900 mb-8">Available Services</h2>
+        <div class="space-y-8">
+          {event.services?.map((service, serviceIndex) => (
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg transition-shadow">
+              <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
+                <div class="flex-1">
+                  <h3 class="text-2xl font-bold text-slate-900 mb-2">{service.name}</h3>
+                  <p class="text-slate-600 mb-4">{service.description}</p>
+                  <div class="flex flex-wrap items-center gap-4 text-sm">
+                    <div class="flex items-center text-slate-500">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                      {service.department}
+                    </div>
+                    <div class="flex items-center text-indigo-600 font-medium">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {service.estimatedTime}
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-4 lg:mt-0 lg:ml-6">
+                  <button class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
+                    Start Application
+                  </button>
+                </div>
+              </div>
+
+              <!-- Required Documents -->
+              {service.requiredDocuments && service.requiredDocuments.length > 0 && (
+                <div class="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                  <h4 class="font-semibold text-amber-900 mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Required Documents
+                  </h4>
+                  <ul class="space-y-1 text-amber-800">
+                    {service.requiredDocuments.map((doc) => (
+                      <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        {doc}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <!-- Steps -->
+              {service.steps && service.steps.length > 0 && (
+                <div>
+                  <h4 class="text-lg font-semibold text-slate-900 mb-4">How to Complete This Service</h4>
+                  <div class="space-y-4">
+                    {service.steps.map((step, stepIndex) => (
+                      <div class="flex items-start space-x-4 p-4 bg-slate-50 rounded-xl">
+                        <div class="shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                          {stepIndex + 1}
+                        </div>
+                        <div class="flex-1">
+                          <h5 class="font-semibold text-slate-900 mb-1">{step.title}</h5>
+                          <p class="text-slate-600 text-sm mb-2">{step.description}</p>
+                          {step.estimatedTime && (
+                            <div class="flex items-center text-indigo-600 text-sm font-medium">
+                              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              Estimated time: {step.estimatedTime}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )) || (
+            <div class="bg-white rounded-2xl p-12 text-center border border-slate-100">
+              <div class="text-5xl mb-4">🚧</div>
+              <h3 class="text-xl font-semibold text-slate-900 mb-2">Services Coming Soon</h3>
+              <p class="text-slate-600">We're working on adding services for this life event. Check back soon!</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Related Resources -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Related Resources</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-xl p-6 border border-slate-100">
+            <h3 class="font-semibold text-slate-900 mb-3">Helpful Articles</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Understanding {event.title} Process</a></li>
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Common Questions About {event.title}</a></li>
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Tips for Smooth {event.title}</a></li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-xl p-6 border border-slate-100">
+            <h3 class="font-semibold text-slate-900 mb-3">External Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Official Government Website</a></li>
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Download Forms</a></li>
+              <li><a href="#" class="text-indigo-600 hover:text-indigo-700">Contact Information</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="text-center">
+        <div class="bg-linear-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 text-white">
+          <h2 class="text-2xl font-bold mb-4">Need Help with {event.title}?</h2>
+          <p class="text-indigo-100 mb-6 max-w-2xl mx-auto">
+            Our team of experts is here to guide you through every step of the process. Get personalized assistance for your specific situation.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="px-8 py-3 bg-white text-indigo-600 rounded-xl font-semibold hover:bg-indigo-50 transition-colors">
+              Get Personalized Help
+            </button>
+            <button class="px-8 py-3 bg-indigo-700 text-white rounded-xl font-semibold hover:bg-indigo-800 transition-colors">
+              Schedule Consultation
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

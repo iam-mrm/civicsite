@@ -1,0 +1,119 @@
+---
+import { keralaServices } from '../data/keralaServices';
+import type { Service } from '@/types';
+
+interface ServiceWithAction extends Service {
+  actionUrl?: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "Government Services Made Simple",
+  subtitle = "Don't know which website to visit for what? We'll guide you step by step through all Kerala government services in plain English."
+} = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-6 py-16 bg-slate-50">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{title}</h2>
+    <p class="text-xl text-slate-600 max-w-3xl mx-auto">{subtitle}</p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+    {keralaServices.map((service) => (
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+        <div class="bg-linear-to-r from-green-600 to-green-700 p-6 text-white">
+          <div class="flex items-center justify-between">
+            <div class="text-4xl">{service.emoji}</div>
+            <div class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+              {service.category?.replace('-', ' ').toUpperCase()}
+            </div>
+          </div>
+          <h3 class="text-2xl font-bold mt-4 mb-2">{service.title}</h3>
+          <p class="text-green-100">{service.description}</p>
+        </div>
+        
+        <div class="p-6">
+          <div class="mb-4">
+            <h4 class="font-semibold text-slate-900 mb-2">Available Services:</h4>
+            <div class="space-y-2">
+              {service.services?.slice(0, 3).map((svc: ServiceWithAction) => (
+                <div class="flex items-start text-sm text-slate-600">
+                  <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010-1.414l-8 8a1 1 0 00-1.414 1.414l8-8a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+                  </svg>
+                  {svc.actionUrl ? (
+                    <a href={svc.actionUrl} target="_blank" class="text-green-800 font-medium hover:text-green-900">
+                      {svc.name}
+                    </a>
+                  ) : (
+                    <span class="text-green-800 font-medium">{svc.name}</span>
+                  )}
+                </div>
+              ))}
+              {service.services && service.services.length > 3 && (
+                <div class="text-sm text-slate-500 italic">
+                  +{service.services.length - 3} more services
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-slate-500">
+              <span class="font-medium">{service.services?.length || 0} services</span>
+            </div>
+            {service.websiteUrl ? (
+              <a 
+                href={service.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+              >
+                Visit Official Portal
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6m0 0h6m0 0v6m0 0h6M6 6v6m0 0v6" />
+                </svg>
+              </a>
+            ) : (
+              <a 
+                href={`/services/${service.slug}`}
+                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                View Services
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <div class="mt-12 bg-blue-50 border border-blue-200 rounded-xl p-8">
+    <div class="text-center">
+      <div class="text-3xl mb-4">💡</div>
+      <h3 class="text-xl font-bold text-slate-900 mb-3">Why This Website Helps You</h3>
+      <div class="grid md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto">
+        <div>
+          <div class="font-semibold text-blue-900 mb-2">🎯 One Place for Everything</div>
+          <p class="text-sm text-slate-700">No need to remember different government websites. Everything you need is right here.</p>
+        </div>
+        <div>
+          <div class="font-semibold text-blue-900 mb-2">📝 Easy to Follow Steps</div>
+          <p class="text-sm text-slate-700">We explain each service in simple steps with clear instructions.</p>
+        </div>
+        <div>
+          <div class="font-semibold text-blue-900 mb-2">⏱️ Save Your Time</div>
+          <p class="text-sm text-slate-700">Avoid running around in circles. Get things done faster with our help.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

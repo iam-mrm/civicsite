@@ -1,157 +1,95 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import Hero from '../components/Hero.astro';
+import EmergencyServices from '../components/EmergencyServices.astro';
+import GovernmentServices from '../components/GovernmentServices.astro';
 ---
 
-<Layout title="Your Civic Portal - Life Events Made Simple">
-  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+<Layout title={siteConfig.title}>
+  <main class="min-h-screen bg-white">
     
     <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-6 py-16 md:py-24">
-      <div class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold text-slate-900 mb-6">
-          Life happens. <span class="text-indigo-600">We help you navigate it.</span>
-        </h1>
-        <p class="text-xl text-slate-600 max-w-2xl mx-auto">
-          No forms, no jargon. Just what you need to know, when you need it.
-        </p>
-      </div>
+    <Hero />
 
-      <!-- Search Bar -->
-      <div class="max-w-2xl mx-auto mb-20">
-        <div class="relative">
-          <input 
-            type="text" 
-            placeholder="What's happening in your life? (e.g., having a baby, moving, starting a business...)"
-            class="w-full px-6 py-5 text-lg rounded-2xl shadow-lg border-2 border-transparent focus:border-indigo-400 focus:outline-none transition-all"
-          />
-          <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors font-medium">
-            Search
-          </button>
-        </div>
-      </div>
+    <!-- Emergency Services -->
+    <EmergencyServices />
 
-      <!-- Life Events Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- Card: New Baby -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">👶</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Having a baby</h3>
-          <p class="text-slate-600 mb-4">Birth certificates, healthcare, parental leave, and everything you need for your growing family.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
+    <!-- Government Services Made Simple -->
+    <GovernmentServices />
 
-        <!-- Card: Moving -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">🏠</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Moving</h3>
-          <p class="text-slate-600 mb-4">Update your address, transfer utilities, register to vote, and settle into your new neighborhood.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Starting Business -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">💼</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Starting a business</h3>
-          <p class="text-slate-600 mb-4">Register your business, understand taxes, get permits, and launch with confidence.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Getting Married -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">💍</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Getting married</h3>
-          <p class="text-slate-600 mb-4">Marriage licenses, name changes, updating documents, and planning your future together.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Buying a Home -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">🔑</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Buying a home</h3>
-          <p class="text-slate-600 mb-4">First-time buyer programs, property records, inspections, and making your homeownership dream real.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Job Change -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">📋</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Changing jobs</h3>
-          <p class="text-slate-600 mb-4">Unemployment benefits, job training programs, healthcare transitions, and career resources.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Retirement -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">🌅</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Planning retirement</h3>
-          <p class="text-slate-600 mb-4">Social security, Medicare, pension benefits, and enjoying the next chapter of life.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Health Emergency -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">🏥</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Health concerns</h3>
-          <p class="text-slate-600 mb-4">Healthcare coverage, medical assistance programs, disability support, and wellness resources.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-        <!-- Card: Loss of Loved One -->
-        <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:border-indigo-200">
-          <div class="text-5xl mb-4">🕊️</div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-3">Loss of a loved one</h3>
-          <p class="text-slate-600 mb-4">Death certificates, estate matters, grief support, and compassionate guidance during difficult times.</p>
-          <span class="text-indigo-600 font-medium group-hover:underline">Get started →</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Quick Actions Bar -->
-    <section class="bg-white border-t border-slate-200 py-12">
-      <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-center text-sm font-semibold text-slate-500 uppercase tracking-wider mb-8">Quick Actions</h2>
-        <div class="flex flex-wrap justify-center gap-4">
-          <button class="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium transition-colors">
-            📄 Request documents
-          </button>
-          <button class="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium transition-colors">
-            📅 Book appointment
-          </button>
-          <button class="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium transition-colors">
-            💬 Ask a question
-          </button>
-          <button class="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium transition-colors">
-            🔔 Track application
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Trust Indicators -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-      <div class="bg-linear-to-r from-indigo-600 to-blue-600 rounded-3xl p-12 text-center text-white">
-        <h2 class="text-3xl font-bold mb-4">Real people. Real help.</h2>
-        <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-          We've helped over 250,000 people navigate their civic needs. No bots, no bureaucracy—just clear answers when you need them.
-        </p>
-        <div class="flex flex-wrap justify-center gap-12 text-center">
-          <div>
-            <div class="text-4xl font-bold">250K+</div>
-            <div class="text-indigo-200">People helped</div>
-          </div>
-          <div>
-            <div class="text-4xl font-bold">4.8★</div>
-            <div class="text-indigo-200">Average rating</div>
-          </div>
-          <div>
-            <div class="text-4xl font-bold">24/7</div>
-            <div class="text-indigo-200">Support available</div>
+    <!-- Quick Help Section -->
+    <section class="bg-blue-50 py-16">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white rounded-2xl p-8">
+          <h2 class="text-2xl font-light text-gray-900 text-center mb-8">
+            Need immediate help with Kerala government services?
+          </h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="text-3xl mb-3">📞</div>
+              <h3 class="font-medium text-gray-900 mb-2">Helpline Numbers</h3>
+              <p class="text-gray-600 text-sm mb-4">Official government helplines for all services</p>
+              <a href="/contact" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                View Helplines
+              </a>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl mb-3">🏛️</div>
+              <h3 class="font-medium text-gray-900 mb-2">Office Locator</h3>
+              <p class="text-gray-600 text-sm mb-4">Find government offices near your location</p>
+              <a href="/resources" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                Find Offices
+              </a>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl mb-3">💬</div>
+              <h3 class="font-medium text-gray-900 mb-2">Live Chat Help</h3>
+              <p class="text-gray-600 text-sm mb-4">Get help with online forms and portals</p>
+              <a href="/contact" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                Start Chat
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
   </main>
+
+  <script>
+    // Simple search functionality
+    const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          const query = searchInput.value;
+          if (query.trim()) {
+            window.location.href = `/search?q=${encodeURIComponent(query)}`;
+          }
+        }
+      });
+    }
+
+    // Intent card clicks
+    document.querySelectorAll('.intent-card').forEach((card: Element) => {
+      const htmlCard = card as HTMLElement;
+      htmlCard.addEventListener('click', function() {
+        const title = this.querySelector('h3')?.textContent;
+        window.location.href = `/guidance?intent=${encodeURIComponent(title || '')}`;
+      });
+    });
+
+    // Emergency card clicks
+    document.querySelectorAll('.emergency-card').forEach((card: Element) => {
+      const htmlCard = card as HTMLElement;
+      htmlCard.addEventListener('click', function() {
+        const phoneElement = this.querySelector('.text-2xl');
+        const phone = phoneElement?.textContent;
+        if (phone) {
+          window.location.href = `tel:${phone}`;
+        }
+      });
+    });
+  </script>
 </Layout>

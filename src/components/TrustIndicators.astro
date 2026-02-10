@@ -1,0 +1,42 @@
+---
+interface TrustMetric {
+  id: string;
+  value: string;
+  label: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  metrics?: TrustMetric[];
+}
+
+const defaultMetrics: TrustMetric[] = [
+  { id: 'people', value: '250K+', label: 'People helped' },
+  { id: 'rating', value: '4.8★', label: 'Average rating' },
+  { id: 'support', value: '24/7', label: 'Support available' }
+];
+
+const {
+  title = "Real people. Real help.",
+  subtitle = "We've helped over 250,000 people navigate their civic needs. No bots, no bureaucracy—just clear answers when you need them.",
+  metrics = defaultMetrics
+} = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <div class="bg-linear-to-r from-indigo-600 to-blue-600 rounded-3xl p-12 text-center text-white">
+    <h2 class="text-3xl font-bold mb-4">{title}</h2>
+    <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">{subtitle}</p>
+    <div class="flex flex-wrap justify-center gap-12 text-center">
+      {
+        metrics.map((metric) => (
+          <div>
+            <div class="text-4xl font-bold">{metric.value}</div>
+            <div class="text-indigo-200">{metric.label}</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

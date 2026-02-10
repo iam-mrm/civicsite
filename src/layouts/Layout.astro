@@ -1,11 +1,15 @@
 ---
 import '../styles/global.css'
+import Navigation from '../components/Navigation.astro'
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+// Get current path for navigation highlighting
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -15,8 +19,93 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    
+    <!-- Improved Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your trusted guide for navigating government services and understanding what to expect" />
+    <meta name="keywords" content="government services guide, civic navigation, official portals, document help" />
+    <meta name="author" content="Civic Guide" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Your trusted guide for navigating government services and understanding what to expect" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content="Your trusted guide for navigating government services and understanding what to expect" />
+    <meta name="twitter:image" content="/og-image.jpg" />
   </head>
-  <body>
+  <body class="font-sans">
+    <Navigation currentPath={currentPath} />
     <slot />
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+      <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+          <!-- About -->
+          <div>
+            <h3 class="font-medium text-lg mb-4">Civic Guide</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Making government services simple and understandable for everyone.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12s-12 5.373-12 12 5.373 12 12zm-6-8.5c0-1.657-1.343-3-3s-3 1.343-3 3 1.343 3 3zm3 11.5c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5z"/>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 00-2.165-2.724c.954.567 1.643 1.464 1.643 2.724 0 1.657-1.343 3-3 3a2.99 2.99 0 01-2.816-1.979 3.063 3.063 0 01-.851.105 4.958 4.958 0 001.643 3.5c-1.657 0-3-1.343-3-3 0-.194.021-.382.058-.563a3.01 3.01 0 002.165 2.724 4.958 4.958 0 002.825.775 10 10 0 002.825.775 4.958 4.958 0 002.165-2.724c-.954.567-1.643 1.464-1.643 2.724 0 1.657 1.343 3 3a2.99 2.99 0 002.816-1.979 3.063 3.063 0 00.851.105 4.958 4.958 0 00-1.643 3.5c1.657 0 3-1.343 3-3 0 .194-.021.382-.058.563a3.01 3.01 0 00-2.165 2.724z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Quick Links -->
+          <div>
+            <h3 class="font-medium text-lg mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/guidance" class="text-gray-300 hover:text-white transition-colors">Get Guidance</a></li>
+              <li><a href="/resources" class="text-gray-300 hover:text-white transition-colors">All Resources</a></li>
+              <li><a href="/contact" class="text-gray-300 hover:text-white transition-colors">Contact Help</a></li>
+            </ul>
+          </div>
+          
+          <!-- Popular Guides -->
+          <div>
+            <h3 class="font-medium text-lg mb-4">Popular Guides</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/guidance?intent=Starting%20a%20Family" class="text-gray-300 hover:text-white transition-colors">Starting a Family</a></li>
+              <li><a href="/guidance?intent=Moving%20or%20Relocating" class="text-gray-300 hover:text-white transition-colors">Moving Home</a></li>
+              <li><a href="/guidance?intent=Starting%20a%20Business" class="text-gray-300 hover:text-white transition-colors">Starting a Business</a></li>
+            </ul>
+          </div>
+          
+          <!-- Support -->
+          <div>
+            <h3 class="font-medium text-lg mb-4">Get Help</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/contact" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">FAQ</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+          <p>&copy; 2024 Civic Guide. All rights reserved.</p>
+          <p class="mt-2">Your trusted guide for government services.</p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

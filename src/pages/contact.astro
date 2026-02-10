@@ -1,0 +1,233 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+
+const seoProps = generateSEOProps({
+  title: 'Contact Help - Civic Guide',
+  description: 'Get help navigating government services and finding the right resources.'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-white">
+    
+    <!-- Header -->
+    <section class="px-6 py-12 max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-light text-gray-900 mb-4">
+          Need Help Navigating Government Services?
+        </h1>
+        <p class="text-xl text-gray-600 leading-relaxed">
+          We're here to guide you to the right resources and help you understand what to expect.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Options -->
+    <section class="bg-gray-50 py-12">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 text-center mb-12">
+          How Can We Help You?
+        </h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              title: 'Find the Right Office',
+              description: 'We help you locate the correct government office for your needs.',
+              icon: '🏛️',
+              action: 'Find Offices',
+              href: '/resources'
+            },
+            {
+              title: 'Understand Requirements',
+              description: 'Get clear explanations of what documents and information you need.',
+              icon: '📋',
+              action: 'Get Guidance',
+              href: '/guidance'
+            },
+            {
+              title: 'Navigate Websites',
+              description: 'Step-by-step help using official government portals and forms.',
+              icon: '🌐',
+              action: 'Website Help',
+              href: '#'
+            },
+            {
+              title: 'Document Preparation',
+              description: 'Guidance on gathering and preparing the right documents.',
+              icon: '📄',
+              action: 'Document Help',
+              href: '/guidance?intent=Document%20Preparation'
+            },
+            {
+              title: 'Process Questions',
+              description: 'Answers about timelines, requirements, and what to expect.',
+              icon: '❓',
+              action: 'Ask Questions',
+              href: '/contact#faq'
+            },
+            {
+              title: 'Emergency Help',
+              description: 'Immediate assistance for urgent situations and crisis support.',
+              icon: '🆘',
+              action: 'Get Emergency Help',
+              href: '/resources#emergency'
+            },
+            {
+              title: 'Language Assistance',
+              description: 'Help with language barriers and translation services.',
+              icon: '🗣️',
+              action: 'Language Help',
+              href: '#'
+            }
+          ].map((service) => (
+            <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-all text-center">
+              <div class="text-4xl mb-4">{service.icon}</div>
+              <h3 class="text-lg font-medium text-gray-900 mb-2">{service.title}</h3>
+              <p class="text-gray-600 text-sm mb-6">{service.description}</p>
+              <a 
+                href={service.href} 
+                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium"
+              >
+                {service.action}
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2h-4zm4 0h4v16m0 0l4-4m-4 4h4" />
+                </svg>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct Contact Information -->
+    <section class="py-12">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-blue-50 rounded-2xl p-8">
+          <h2 class="text-2xl font-light text-gray-900 text-center mb-8">
+            Direct Contact Information
+          </h2>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="font-medium text-gray-900 mb-4">Government Services</h3>
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">📞</span>
+                  <div>
+                    <div class="font-medium">Main Information</div>
+                    <div class="text-gray-600 text-sm">311 (Information)</div>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">🆘</span>
+                  <div>
+                    <div class="font-medium">Emergencies</div>
+                    <div class="text-gray-600 text-sm">911</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="font-medium text-gray-900 mb-4">Help Resources</h3>
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">💬</span>
+                  <div>
+                    <div class="font-medium">Live Chat</div>
+                    <div class="text-gray-600 text-sm">Available 9AM-6PM EST</div>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">📧</span>
+                  <div>
+                    <div class="font-medium">Email Support</div>
+                    <div class="text-gray-600 text-sm">help@civicguide.org</div>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">📱</span>
+                  <div>
+                    <div class="font-medium">Text Help</div>
+                    <div class="text-gray-600 text-sm">Text HELP to 555-123</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Office Hours -->
+        <div class="mt-8 pt-8 border-t border-blue-200">
+          <h3 class="font-medium text-gray-900 mb-4 text-center">Service Hours</h3>
+          <div class="grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div class="font-medium text-gray-900">Phone Support</div>
+              <div class="text-gray-600">Monday-Friday<br />8AM-6PM EST</div>
+            </div>
+            <div>
+              <div class="font-medium text-gray-900">Live Chat</div>
+              <div class="text-gray-600">Monday-Friday<br />9AM-6PM EST</div>
+            </div>
+            <div>
+              <div class="font-medium text-gray-900">Email Support</div>
+              <div class="text-gray-600">Response within 24 hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-12">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 text-center mb-8">
+          Frequently Asked Questions
+        </h2>
+        
+        <div class="space-y-4">
+          {[
+            {
+              q: 'How do I know which government office to contact?',
+              a: 'Start with our guidance page to identify your specific need, then use our resources page to find the correct official office for your location.'
+            },
+            {
+              q: 'What documents should I bring to government offices?',
+              a: 'Always bring photo ID, Social Security card, and any specific documents related to your service. Check our guidance pages for detailed requirements.'
+            },
+            {
+              q: 'How long do government services typically take?',
+              a: 'Processing times vary widely. Most services take 2-4 weeks, while urgent requests may be processed faster. Check specific service pages for estimates.'
+            },
+            {
+              q: 'Can you help me fill out government forms?',
+              a: 'We provide guidance and help you understand requirements, but cannot fill out official forms on your behalf. We can direct you to the right resources and explain each step.'
+            },
+            {
+              q: 'What if I need help outside business hours?',
+              a: 'Emergency services like 911 are available 24/7. For non-emergency help, use our resources page to find 24/7 services or leave us a message.'
+            }
+          ].map((faq, index) => (
+            <details class="bg-white rounded-xl border border-gray-200">
+              <summary class="p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="flex items-center justify-between">
+                  <span class="font-medium text-gray-900">{faq.q}</span>
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7 7 7 0 0114 0 4-4v4a2 2 0 002 2 0 01.447.894 2 2h4a2 2 0 002-2V7a2 2 0 00-2-2h-4z" />
+                  </svg>
+                </div>
+              </summary>
+              <div class="px-6 pb-6">
+                <p class="text-gray-600 leading-relaxed">{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>

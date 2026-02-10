@@ -1,0 +1,410 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+
+const seoProps = generateSEOProps({
+  title: 'Kerala Government Portals - Civic Guide',
+  description: 'Complete directory of Kerala government websites and official services.'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-white">
+    
+    <!-- Header -->
+    <section class="px-6 py-12 max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-light text-gray-900 mb-4">
+          Kerala Government Portals & Services
+        </h1>
+        <p class="text-xl text-gray-600 leading-relaxed">
+          Quick access to all official Kerala government websites and services you need.
+        </p>
+      </div>
+    </section>
+
+    <!-- Emergency Services -->
+    <section class="bg-red-50 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 mb-8">Emergency Services</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              name: 'Police Emergency',
+              description: 'Report crimes, file complaints, seek police help',
+              phone: '100',
+              url: 'tel:100',
+              category: 'Emergency',
+              icon: '👮'
+            },
+            {
+              name: 'Ambulance Services',
+              description: 'Medical emergency and ambulance services',
+              phone: '108',
+              url: 'tel:108',
+              category: 'Emergency',
+              icon: '🚑'
+            },
+            {
+              name: 'Fire Force',
+              description: 'Fire emergencies and rescue operations',
+              phone: '101',
+              url: 'tel:101',
+              category: 'Emergency',
+              icon: '🚒'
+            },
+            {
+              name: 'Disaster Management',
+              description: 'Natural disasters, floods, relief operations',
+              phone: '1070',
+              url: 'tel:1070',
+              category: 'Emergency',
+              icon: '🆘'
+            }
+          ].map((resource) => (
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-red-200">
+              <div class="flex items-start mb-4">
+                <span class="text-2xl mr-3 text-red-600">{resource.icon}</span>
+                <div>
+                  <h3 class="font-medium text-gray-900 mb-1">{resource.name}</h3>
+                  <span class="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full mb-2">
+                    {resource.category}
+                  </span>
+                  <p class="text-gray-600 text-sm">{resource.description}</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-red-600">{resource.phone}</span>
+                <a 
+                  href={resource.url} 
+                  class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                >
+                  Call Now
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.707.293l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 001.414 1.414l-4-4z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Kerala Government Portals -->
+    <section class="bg-gray-50 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 mb-8">Official Kerala Government Portals</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              name: 'e-Sevanam',
+              description: 'Citizen services, certificates, applications',
+              url: 'https://www.sevanam.kerala.gov.in/',
+              category: 'Citizen Services',
+              icon: '�️'
+            },
+            {
+              name: 'K-Smart',
+              description: 'Vehicle registration, driving license, permits',
+              url: 'https://kerala.gov.in/k-smart/',
+              category: 'Transport',
+              icon: '🚗'
+            },
+            {
+              name: 'e-District',
+              description: 'District administration services, certificates',
+              url: 'https://edistrict.kerala.gov.in/',
+              category: 'District Services',
+              icon: '�'
+            },
+            {
+              name: 'Bhoomi',
+              description: 'Land records, property registration, survey',
+              url: 'https://bhoomi.kerala.gov.in/',
+              category: 'Land Records',
+              icon: '�'
+            },
+            {
+              name: 'e-Rekha',
+              description: 'Land survey, cadastral records, maps',
+              url: 'https://erekha.kerala.gov.in/',
+              category: 'Land Survey',
+              icon: '�️'
+            },
+            {
+              name: 'Sampoorna',
+              description: 'School education, student database, scholarships',
+              url: 'https://sampoorna.kerala.gov.in/',
+              category: 'Education',
+              icon: '🎓'
+            },
+            {
+              name: 'Arogyakeralam',
+              description: 'Health services, medical records, insurance',
+              url: 'https://arogyakeralam.gov.in/',
+              category: 'Health',
+              icon: '🏥'
+            },
+            {
+              name: 'Karunya',
+              description: 'Health insurance, medical assistance schemes',
+              url: 'https://karunya.kerala.gov.in/',
+              category: 'Health Insurance',
+              icon: '�'
+            },
+            {
+              name: 'KSEB Portal',
+              description: 'Electricity bill payment, new connections, complaints',
+              url: 'https://www.kseb.in/',
+              category: 'Electricity',
+              icon: '💡'
+            },
+            {
+              name: 'KWA Portal',
+              description: 'Water supply, bill payment, new connections',
+              url: 'https://kwa.kerala.gov.in/',
+              category: 'Water Supply',
+              icon: '�'
+            }
+          ].map((resource) => (
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all">
+              <div class="flex items-start mb-4">
+                <span class="text-2xl mr-3">{resource.icon}</span>
+                <div>
+                  <h3 class="font-medium text-gray-900 mb-1">{resource.name}</h3>
+                  <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full mb-2">
+                    {resource.category}
+                  </span>
+                  <p class="text-gray-600 text-sm">{resource.description}</p>
+                </div>
+              </div>
+              <a 
+                href={resource.url} 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+              >
+                Visit Official Portal
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2h-4zm4 0h4v16m0 0l4-4m-4 4h4" />
+                </svg>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Department Websites -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 mb-8">Department Websites</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              name: 'Kerala Government',
+              description: 'Main portal for all government services',
+              url: 'https://kerala.gov.in/',
+              category: 'Main Portal',
+              icon: '🏛️'
+            },
+            {
+              name: 'Motor Vehicles Department',
+              description: 'Driving licenses, vehicle registration, permits',
+              url: 'https://keralamvd.gov.in/',
+              category: 'Transport',
+              icon: '🚗'
+            },
+            {
+              name: 'Revenue Department',
+              description: 'Land revenue, stamps, registration',
+              url: 'https://revenue.kerala.gov.in/',
+              category: 'Revenue',
+              icon: '�'
+            },
+            {
+              name: 'Local Self Government',
+              description: 'Municipalities, panchayats, local services',
+              url: 'https://lsgkerala.gov.in/',
+              category: 'Local Gov',
+              icon: '🏘️'
+            },
+            {
+              name: 'Public Service Commission',
+              description: 'PSC exams, recruitments, notifications',
+              url: 'https://www.keralapsc.gov.in/',
+              category: 'Employment',
+              icon: '💼'
+            },
+            {
+              name: 'Higher Education',
+              description: 'Colleges, universities, admissions',
+              url: 'https://www.highereducation.kerala.gov.in/',
+              category: 'Higher Edu',
+              icon: '�'
+            },
+            {
+              name: 'General Education',
+              description: 'Schools, SSLC, HSE, exams',
+              url: 'https://www.general-education.kerala.gov.in/',
+              category: 'School Edu',
+              icon: '🏫'
+            },
+            {
+              name: 'Agriculture Department',
+              description: 'Farming, subsidies, agricultural schemes',
+              url: 'https://www.keralaagriculture.gov.in/',
+              category: 'Agriculture',
+              icon: '🌾'
+            },
+            {
+              name: 'Health Department',
+              description: 'Public health, hospitals, medical services',
+              url: 'https://dhs.kerala.gov.in/',
+              category: 'Health',
+              icon: '�'
+            },
+            {
+              name: 'Social Justice',
+              description: 'Welfare schemes, pensions, social security',
+              url: 'https://socialjustice.kerala.gov.in/',
+              category: 'Welfare',
+              icon: '�'
+            }
+          ].map((resource) => (
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all">
+              <div class="flex items-start mb-4">
+                <span class="text-2xl mr-3">{resource.icon}</span>
+                <div>
+                  <h3 class="font-medium text-gray-900 mb-1">{resource.name}</h3>
+                  <span class="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full mb-2">
+                    {resource.category}
+                  </span>
+                  <p class="text-gray-600 text-sm">{resource.description}</p>
+                </div>
+              </div>
+              <a 
+                href={resource.url} 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+              >
+                Visit Website
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2h-4zm4 0h4v16m0 0l4-4m-4 4h4" />
+                </svg>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Helpline Numbers -->
+    <section class="bg-blue-50 py-12">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-2xl font-light text-gray-900 mb-8">Important Helpline Numbers</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {[
+            {
+              name: 'Chief Minister\'s Helpline',
+              description: 'Public grievance redressal system',
+              phone: '1090',
+              category: 'Grievance',
+              icon: '📞'
+            },
+            {
+              name: 'COVID-19 Helpline',
+              description: 'COVID-19 related queries and assistance',
+              phone: '104',
+              category: 'Health',
+              icon: '🦠'
+            },
+            {
+              name: 'Women Helpline',
+              description: 'Women safety and welfare assistance',
+              phone: '181',
+              category: 'Women Safety',
+              icon: '👩'
+            },
+            {
+              name: 'Child Helpline',
+              description: 'Child protection and welfare services',
+              phone: '1098',
+              category: 'Child Welfare',
+              icon: '👶'
+            },
+            {
+              name: 'Elderly Helpline',
+              description: 'Senior citizen assistance and support',
+              phone: '1091',
+              category: 'Elderly Care',
+              icon: '👴'
+            },
+            {
+              name: 'Disaster Helpline',
+              description: 'Disaster management and relief',
+              phone: '1070',
+              category: 'Disaster',
+              icon: '🆘'
+            }
+          ].map((resource) => (
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-blue-200">
+              <div class="flex items-start mb-4">
+                <span class="text-2xl mr-3 text-blue-600">{resource.icon}</span>
+                <div>
+                  <h3 class="font-medium text-gray-900 mb-1">{resource.name}</h3>
+                  <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full mb-2">
+                    {resource.category}
+                  </span>
+                  <p class="text-gray-600 text-sm">{resource.description}</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-blue-600">{resource.phone}</span>
+                <a 
+                  href={`tel:${resource.phone}`} 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                >
+                  Call Now
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.707.293l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 001.414 1.414l-4-4z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="py-12">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-blue-50 rounded-2xl p-8 text-center">
+          <h2 class="text-2xl font-light text-gray-900 mb-4">Need Help Navigating?</h2>
+          <p class="text-gray-600 mb-6">
+            Can't find what you're looking for? Our team is here to help guide you to right Kerala government services.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="/contact" 
+              class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium"
+            >
+              Get Personalized Help
+            </a>
+            <a 
+              href="/guidance" 
+              class="px-6 py-3 bg-white text-blue-600 border border-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-medium"
+            >
+              Browse Guidance Topics
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>

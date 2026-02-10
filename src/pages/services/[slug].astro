@@ -1,0 +1,222 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteConfig } from '../../data/siteConfig';
+import { getKeralaServiceBySlug, keralaServices } from '../../data/keralaServices';
+import { generateSEOProps } from '../../utils/seo';
+import type { KeralaService, Service, Step } from '@/types';
+
+interface ServiceData {
+  title: string;
+  emoji: string;
+  description: string;
+  websiteUrl?: string;
+  services?: ServiceWithAction[];
+}
+
+interface ServiceWithAction extends Service {
+  actionUrl?: string;
+}
+
+interface SEOData {
+  title?: string;
+  description?: string;
+}
+
+export async function getStaticPaths() {
+  return keralaServices.map((service: KeralaService) => {
+    const seoData = generateSEOProps({
+      title: `${service.title} - Kerala Government Helper`,
+      description: service.description
+    });
+
+    return {
+      params: { slug: service.slug },
+      props: {
+        seoData,
+        serviceData: {
+          title: service.title,
+          emoji: service.emoji,
+          description: service.description,
+          websiteUrl: service.websiteUrl,
+          services: service.services
+        }
+      }
+    };
+  });
+}
+
+const { seoData, serviceData }: { seoData: SEOData; serviceData: ServiceData } = Astro.props;
+---
+
+<Layout title={seoData.title || ''}>
+  <main class="min-h-screen bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center space-x-2 text-sm mb-6">
+        <a href="/" class="text-slate-500 hover:text-slate-700">Home</a>
+        <span class="text-slate-400">/</span>
+        <a href="/services" class="text-slate-500 hover:text-slate-700">Services</a>
+        <span class="text-slate-400">/</span>
+                <span class="text-slate-900 font-medium">{serviceData.title}</span>
+      </nav>
+
+      <!-- Service Header -->
+      <div class="bg-linear-to-r from-green-600 to-green-700 text-white p-8 rounded-xl mb-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <div class="text-5xl mr-4">{serviceData.emoji}</div>
+            <div>
+              <h1 class="text-3xl font-bold mb-2">{serviceData.title}</h1>
+              <p class="text-green-100 text-lg">{serviceData.description}</p>
+            </div>
+          </div>
+          {serviceData.websiteUrl && (
+            <a 
+              href={serviceData.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-6 py-3 bg-white/20 hover:bg-white/30 text-white rounded-lg font-medium transition-colors"
+            >
+              Visit Official Portal
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6m0 0h6m0 0v6m0 0h6M6 6v6m0 0v6" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Services List -->
+      <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {serviceData.services?.map((svc: ServiceWithAction) => (
+          <div class="bg-white rounded-xl shadow-lg p-6 border border-slate-200">
+            <div class="flex flex-col items-start mb-4">
+              <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-3">
+                {svc.department}
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-slate-900 mb-2">{svc.name}</h3>
+                <p class="text-slate-600 mb-4">{svc.description}</p>
+                
+                {svc.actionUrl && (
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center">
+                      <div class="text-blue-600 mr-3">🚀</div>
+                      <div>
+                        <div class="font-semibold text-blue-900 mb-1">Quick Action</div>
+                        <a 
+                          href={svc.actionUrl}
+                          target="_blank"
+                          class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                        >
+                          Start Application
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Required Documents -->
+            <div class="mb-6">
+              <h4 class="font-semibold text-slate-900 mb-3">📋 Required Documents:</h4>
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <ul class="space-y-2">
+                  {svc.requiredDocuments?.map((doc: string) => (
+                    <li class="flex items-center text-sm text-slate-700">
+                      <svg class="w-4 h-4 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-8 8 8 0v-1a1 1 0 001.414 1.414L10.586 8.414a1 1 0 001.414-1.414L10 18z" clip-rule="evenodd" />
+                      </svg>
+                      {doc}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <!-- Step by Step Guide -->
+            <div>
+              <h4 class="font-semibold text-slate-900 mb-4">📝 Step-by-Step Guide:</h4>
+              <div class="space-y-6">
+                {svc.steps?.map((step: Step, index: number) => (
+                  <div class="flex flex-col items-start">
+                    <div class="shrink-0 w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg mr-4">
+                      {index + 1}
+                    </div>
+                    <div class="flex-1">
+                      <h5 class="font-semibold text-slate-900 mb-2">{step.title}</h5>
+                      <p class="text-slate-600 mb-3">{step.description}</p>
+                      
+                      {step.actionUrl ? (
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                          <div class="flex flex-col items-center">
+                            <div class="text-green-600 mr-3">🔗</div>
+                            <div>
+                              <div class="font-semibold text-green-900 mb-1">Action Required</div>
+                              <a 
+                                href={step.actionUrl}
+                                target="_blank"
+                                class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+                              >
+                                {step.title.includes('Create') ? 'Create Account' : 
+                                 step.title.includes('Login') ? 'Login Now' :
+                                 step.title.includes('Call') ? 'Make Call' :
+                                 step.title.includes('Fill') ? 'Fill Form' :
+                                 step.title.includes('Upload') ? 'Upload Documents' :
+                                 step.title.includes('Pay') ? 'Make Payment' :
+                                 step.title.includes('Save') ? 'Save Receipt' :
+                                 'Complete Step'}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                          <div class="flex items-center mb-2">
+                            <div class="text-slate-600 mr-3">⏱️</div>
+                            <div>
+                              <div class="font-semibold text-slate-900">Estimated Time: {step.estimatedTime}</div>
+                            </div>
+                          </div>
+                          <div class="text-sm text-slate-600">
+                            {step.title}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Help Section -->
+      <div class="mt-12 bg-blue-50 border border-blue-200 rounded-xl p-8">
+        <div class="text-center">
+          <div class="text-3xl mb-4">💬</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Need Help With This Service?</h3>
+          <p class="text-slate-600 mb-6">
+            Our team is here to help you navigate government services without confusion.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="/ask-question"
+              class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            >
+              Ask a Question
+            </a>
+            <a 
+              href="tel:0471-2345678"
+              class="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+            >
+              📞 Call Helpline
+            </a>
+          </div>
+        </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { generateSEOProps } from '../utils/seo';
+
+const seoProps = generateSEOProps({
+  title: 'Book Appointment - Civic Portal',
+  description: 'Schedule appointments with government agencies and service providers.'
+});
+---
+
+<Layout title={seoProps.title || ''}>
+  <main class="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-4xl mx-auto px-6 py-16">
+      
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div class="text-5xl mb-4">📅</div>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Book Appointment</h1>
+        <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+          Schedule in-person or virtual appointments with government agencies and service providers.
+        </p>
+      </div>
+
+      <!-- Service Categories -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Select Service Type</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { id: 'vital-records', name: 'Vital Records', desc: 'Birth, death, marriage certificates', icon: '📋' },
+            { id: 'business-services', name: 'Business Services', desc: 'Licenses, permits, registrations', icon: '💼' },
+            { id: 'property-services', name: 'Property Services', desc: 'Deeds, titles, assessments', icon: '🏠' },
+            { id: 'court-services', name: 'Court Services', desc: 'Legal documents, filings', icon: '⚖️' },
+            { id: 'health-services', name: 'Health Services', desc: 'Public health appointments', icon: '🏥' },
+            { id: 'general-services', name: 'General Services', desc: 'Other government services', icon: '🏛️' }
+          ].map((service) => (
+            <div class="bg-white rounded-xl p-6 border border-slate-100 hover:border-indigo-200 transition-colors cursor-pointer service-card">
+              <div class="text-3xl mb-3">{service.icon}</div>
+              <h3 class="font-semibold text-slate-900 mb-2">{service.name}</h3>
+              <p class="text-slate-600 text-sm">{service.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Appointment Form -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Schedule Your Appointment</h2>
+        <form id="appointmentForm" class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="serviceType" class="block text-sm font-medium text-slate-700 mb-2">
+                Service Type *
+              </label>
+              <select 
+                id="serviceType" 
+                name="serviceType" 
+                required
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select a service type</option>
+                <option value="vital-records">Vital Records</option>
+                <option value="business-services">Business Services</option>
+                <option value="property-services">Property Services</option>
+                <option value="court-services">Court Services</option>
+                <option value="health-services">Health Services</option>
+                <option value="general-services">General Services</option>
+              </select>
+            </div>
+            <div>
+              <label for="appointmentType" class="block text-sm font-medium text-slate-700 mb-2">
+                Appointment Type *
+              </label>
+              <select 
+                id="appointmentType" 
+                name="appointmentType" 
+                required
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select appointment type</option>
+                <option value="in-person">In-Person</option>
+                <option value="virtual">Virtual/Video Call</option>
+                <option value="phone">Phone Call</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="preferredDate" class="block text-sm font-medium text-slate-700 mb-2">
+                Preferred Date *
+              </label>
+              <input 
+                type="date" 
+                id="preferredDate" 
+                name="preferredDate" 
+                required
+                min={new Date().toISOString().split('T')[0]}
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            <div>
+              <label for="preferredTime" class="block text-sm font-medium text-slate-700 mb-2">
+                Preferred Time *
+              </label>
+              <select 
+                id="preferredTime" 
+                name="preferredTime" 
+                required
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select time</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="13:00">1:00 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="16:00">4:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-slate-700 mb-2">
+              Full Name *
+            </label>
+            <input 
+              type="text" 
+              id="fullName" 
+              name="fullName" 
+              required
+              class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-700 mb-2">
+                Email Address *
+              </label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="john@example.com"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-slate-700 mb-2">
+                Phone Number *
+              </label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                required
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="(555) 123-4567"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="reason" class="block text-sm font-medium text-slate-700 mb-2">
+              Reason for Visit *
+            </label>
+            <textarea 
+              id="reason" 
+              name="reason" 
+              rows="4"
+              required
+              class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Please describe what you need assistance with..."
+            ></textarea>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <h4 class="font-semibold text-blue-900 mb-2">Appointment Information</h4>
+            <ul class="text-sm text-blue-800 space-y-1">
+              <li>• You will receive a confirmation email within 24 hours</li>
+              <li>• Please arrive 15 minutes early for in-person appointments</li>
+              <li>• Bring valid photo ID and any required documents</li>
+              <li>• Virtual appointments will use secure video conferencing</li>
+              <li>• Free parking available for in-person visits</li>
+            </ul>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button 
+              type="submit" 
+              class="px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              Book Appointment
+            </button>
+            <button 
+              type="button" 
+              class="px-8 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors"
+            >
+              Check Availability
+            </button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Service card selection
+    const serviceCards = document.querySelectorAll('.service-card') as NodeListOf<HTMLElement>;
+    serviceCards.forEach((card: HTMLElement) => {
+      card.addEventListener('click', function() {
+        const serviceType = card.querySelector('h3')?.textContent;
+        const serviceTypeSelect = document.getElementById('serviceType') as HTMLSelectElement;
+        if (serviceType && serviceTypeSelect) {
+          serviceTypeSelect.value = serviceType.toLowerCase().replace(' ', '-');
+        }
+      });
+    });
+
+    // Form submission
+    document.getElementById('appointmentForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Appointment request submitted successfully! You will receive a confirmation email within 24 hours.');
+    });
+  </script>
+</Layout>

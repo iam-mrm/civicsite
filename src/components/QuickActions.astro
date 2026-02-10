@@ -1,0 +1,35 @@
+---
+interface QuickAction {
+  id: string;
+  emoji: string;
+  text: string;
+}
+
+interface Props {
+  actions?: QuickAction[];
+}
+
+const defaultActions: QuickAction[] = [
+  { id: 'documents', emoji: '📄', text: 'Request documents' },
+  { id: 'appointment', emoji: '📅', text: 'Book appointment' },
+  { id: 'question', emoji: '💬', text: 'Ask a question' },
+  { id: 'track', emoji: '🔔', text: 'Track application' }
+];
+
+const { actions = defaultActions } = Astro.props;
+---
+
+<section class="bg-white border-t border-slate-200 py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center text-sm font-semibold text-slate-500 uppercase tracking-wider mb-8">Quick Actions</h2>
+    <div class="flex flex-wrap justify-center gap-4">
+      {
+        actions.map((action) => (
+          <button class="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium transition-colors">
+            {action.emoji} {action.text}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "Need Help Right Now?",
+  subtitle = "In an emergency? Here are the important numbers you need. Keep them handy - you never know when you or someone else might need help."
+} = Astro.props;
+
+const emergencyServices = [
+  {
+    id: 'police',
+    emoji: '👮',
+    title: 'Police',
+    number: '112',
+    description: 'When you feel unsafe or need help with any crime or accident',
+    color: 'blue'
+  },
+  {
+    id: 'ambulance',
+    emoji: '🚑',
+    title: 'Ambulance',
+    number: '108',
+    description: 'When someone is seriously hurt or needs a doctor right away',
+    color: 'red'
+  },
+  {
+    id: 'fire',
+    emoji: '🔥',
+    title: 'Fire Force',
+    number: '101',
+    description: 'When there\'s a fire or someone needs to be rescued',
+    color: 'orange'
+  },
+  {
+    id: 'disaster',
+    emoji: '🆘',
+    title: 'Disaster Help',
+    number: '1070',
+    description: 'During floods, earthquakes, or other natural disasters',
+    color: 'green'
+  },
+  {
+    id: 'women',
+    emoji: '♀️',
+    title: 'Women Safety',
+    number: '1091',
+    description: 'For women who need help or feel unsafe',
+    color: 'purple'
+  },
+  {
+    id: 'child',
+    emoji: '👶',
+    title: 'Child Help',
+    number: '1098',
+    description: 'When children need help or protection',
+    color: 'pink'
+  }
+];
+---
+
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{title}</h2>
+    <p class="text-xl text-slate-600 max-w-3xl mx-auto">{subtitle}</p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {emergencyServices.map((service) => (
+      <div class={`emergency-card bg-white rounded-xl shadow-lg border-2 border-${service.color}-200 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 p-6`}>
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-4xl">{service.emoji}</div>
+          <div class={`bg-${service.color}-100 text-${service.color}-800 px-3 py-1 rounded-full text-sm font-medium`}>
+            24/7
+          </div>
+        </div>
+        
+        <h3 class="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+        <div class="text-3xl font-bold text-slate-900 mb-3">{service.number}</div>
+        <p class="text-slate-600 text-sm mb-4">{service.description}</p>
+        
+        <div class={`bg-${service.color}-50 rounded-lg p-3 text-center`}>
+          <div class="text-xs text-slate-600 mb-1">Tap to call</div>
+          <div class={`text-${service.color}-600 font-medium`}>
+            📞 {service.number}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <div class="mt-12 bg-amber-50 border border-amber-200 rounded-xl p-6">
+    <div class="flex items-start">
+      <div class="text-2xl mr-3">⚠️</div>
+      <div>
+        <h4 class="font-bold text-slate-900 mb-2">Remember These Important Things</h4>
+        <ul class="text-sm text-slate-700 space-y-1">
+          <li>• Call these numbers only when there's a real emergency</li>
+          <li>• Stay calm and speak clearly when you call</li>
+          <li>• Tell them exactly where you are and what happened</li>
+          <li>• Listen carefully and follow their instructions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
