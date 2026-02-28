@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import Hero from '../components/Hero.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+---
+
+<Layout title="Services - Digital Infrastructure for Kerala Businesses">
+  <main class="min-h-screen" style="background-color: var(--color-background);">
+    
+    {/* Hero Section */}
+    <Hero 
+      title="The Complete Digital Infrastructure System"
+      subtitle="Four interconnected parts that work together to make your business permanently discoverable. Never sold separately because they only work as a complete system."
+      showCTA={false}
+    />
+
+    {/* Detailed Services */}
+    <ServicesGrid showTitle={false} />
+
+    {/* Why Complete System Section */}
+    <section class="py-16" style="background-color: var(--color-secondary);">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--color-primary);">
+            Why This Only Works as a Complete System
+          </h2>
+          <p class="text-lg max-w-3xl mx-auto" style="color: var(--color-text-light);">
+            Piecemeal solutions create piecemeal results. Infrastructure either works correctly or it fails quietly.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: var(--color-warning); opacity: 0.1;">
+              <span class="text-2xl">⚠️</span>
+            </div>
+            <h3 class="text-lg font-bold mb-3" style="color: var(--color-primary);">The Problem with Pieces</h3>
+            <p style="color: var(--color-text-light);">
+              A fast website without Schema means Google can't read your business. Schema without a mobile-friendly site means you fail ranking checks. Each piece depends on the others.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: var(--color-success); opacity: 0.1;">
+              <span class="text-2xl">✓</span>
+            </div>
+            <h3 class="text-lg font-bold mb-3" style="color: var(--color-primary);">The Power of System</h3>
+            <p style="color: var(--color-text-light);">
+              When all four parts work together, you get permanent discoverability. Your business becomes findable, trustable, and manageable from one place.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: var(--color-accent); opacity: 0.1;">
+              <span class="text-2xl">🎯</span>
+            </div>
+            <h3 class="text-lg font-bold mb-3" style="color: var(--color-primary);">No Hidden Dependencies</h3>
+            <p style="color: var(--color-text-light);">
+              You own everything. No monthly subscriptions you didn't agree to. No developer dependency for routine updates. One system that works.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+</Layout>

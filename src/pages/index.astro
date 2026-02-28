@@ -2,94 +2,46 @@
 import Layout from '../layouts/Layout.astro';
 import { siteConfig } from '../data/siteConfig';
 import Hero from '../components/Hero.astro';
-import EmergencyServices from '../components/EmergencyServices.astro';
-import GovernmentServices from '../components/GovernmentServices.astro';
 ---
 
 <Layout title={siteConfig.title}>
-  <main class="min-h-screen bg-white">
+  <main class="bg-white">
     
-    <!-- Hero Section -->
+    {/* Hero Section - Full viewport */}
     <Hero />
 
-    <!-- Emergency Services -->
-    <EmergencyServices />
-
-    <!-- Government Services Made Simple -->
-    <GovernmentServices />
-
-    <!-- Quick Help Section -->
-    <section class="bg-blue-50 py-16">
+    {/* Essential Contact Section - Minimal */}
+    <section id="contact" class="py-24 bg-white">
       <div class="max-w-4xl mx-auto px-6">
-        <div class="bg-white rounded-2xl p-8">
-          <h2 class="text-2xl font-light text-gray-900 text-center mb-8">
-            Need immediate help with Kerala government services?
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--color-primary);">
+            Ready to Fix Your Foundation?
           </h2>
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="text-center">
-              <div class="text-3xl mb-3">📞</div>
-              <h3 class="font-medium text-gray-900 mb-2">Helpline Numbers</h3>
-              <p class="text-gray-600 text-sm mb-4">Official government helplines for all services</p>
-              <a href="/contact" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                View Helplines
-              </a>
-            </div>
-            <div class="text-center">
-              <div class="text-3xl mb-3">🏛️</div>
-              <h3 class="font-medium text-gray-900 mb-2">Office Locator</h3>
-              <p class="text-gray-600 text-sm mb-4">Find government offices near your location</p>
-              <a href="/resources" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                Find Offices
-              </a>
-            </div>
-            <div class="text-center">
-              <div class="text-3xl mb-3">💬</div>
-              <h3 class="font-medium text-gray-900 mb-2">Live Chat Help</h3>
-              <p class="text-gray-600 text-sm mb-4">Get help with online forms and portals</p>
-              <a href="/contact" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                Start Chat
-              </a>
-            </div>
-          </div>
+          <p class="text-lg" style="color: var(--color-text-light);">
+            Let's build what makes your business permanently discoverable.
+          </p>
         </div>
       </div>
     </section>
 
   </main>
+</main>
 
-  <script>
-    // Simple search functionality
-    const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement;
-    if (searchInput) {
-      searchInput.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Enter') {
-          const query = searchInput.value;
-          if (query.trim()) {
-            window.location.href = `/search?q=${encodeURIComponent(query)}`;
-          }
-        }
-      });
-    }
-
-    // Intent card clicks
-    document.querySelectorAll('.intent-card').forEach((card: Element) => {
-      const htmlCard = card as HTMLElement;
-      htmlCard.addEventListener('click', function() {
-        const title = this.querySelector('h3')?.textContent;
-        window.location.href = `/guidance?intent=${encodeURIComponent(title || '')}`;
-      });
-    });
-
-    // Emergency card clicks
-    document.querySelectorAll('.emergency-card').forEach((card: Element) => {
-      const htmlCard = card as HTMLElement;
-      htmlCard.addEventListener('click', function() {
-        const phoneElement = this.querySelector('.text-2xl');
-        const phone = phoneElement?.textContent;
-        if (phone) {
-          window.location.href = `tel:${phone}`;
+<script>
+  // Smooth scroll for anchor links
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      const anchorElement = anchor as HTMLAnchorElement;
+      anchorElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(anchorElement.getAttribute('href') || '');
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       });
     });
-  </script>
-</Layout>
+  });
+</script>

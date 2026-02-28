@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import Hero from '../components/Hero.astro';
+import CaseStudies from '../components/CaseStudies.astro';
+---
+
+<Layout title="Portfolio - Real Results for Kerala Businesses">
+  <main class="min-h-screen bg-white">
+    
+    {/* Hero Section */}
+    <Hero 
+      title="Real Results for Kerala Businesses"
+      subtitle="Technical foundation that produces measurable business outcomes. No marketing claims, just documented before and after results."
+      showCTA={false}
+    />
+
+    {/* All Case Studies */}
+    <CaseStudies showTitle={false} />
+
+    {/* What Makes These Results Different */}
+    <section class="py-16 bg-slate-50">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-slate-900 mb-8">What Makes These Results Different</h2>
+        
+        <div class="space-y-8">
+          <div class="bg-white rounded-xl p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Documented Technical Metrics</h3>
+            <p class="text-slate-700">
+              Every project includes before and after Lighthouse scores, search ranking positions, and discoverability metrics. No vague claims about "better performance" — concrete numbers that prove the foundation works.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Business Outcomes, Not Technical Features</h3>
+            <p class="text-slate-700">
+              The success metrics are business results: more direct bookings, higher search rankings, increased patient inquiries. Technical excellence serves business goals, not the other way around.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Long-Term Sustainability</h3>
+            <p class="text-slate-700">
+              These results aren't from temporary marketing campaigns or paid advertising. They're from building permanent technical infrastructure that continues working years after delivery without ongoing fees.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Kerala Market Specific</h3>
+            <p class="text-slate-700">
+              Each case study represents real Kerala businesses competing in local markets. The challenges and solutions are specific to the Kerala business environment, not generic web design examples.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* The Three Industries We Focus On */}
+    <section class="py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-slate-900 mb-8">The Three Industries We Focus On</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+            <div class="text-3xl mb-4">🏨</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Homestays & Tourism</h3>
+            <p class="text-slate-600">
+              Properties that need to attract visitors from outside Kerala. The challenge is being found by people searching from other cities and countries.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+            <div class="text-3xl mb-4">🏥</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Clinics & Healthcare</h3>
+            <p class="text-slate-600">
+              Healthcare providers who need local patients to find them when searching for specific treatments or services in their area.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+            <div class="text-3xl mb-4">🍽️</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Restaurants & Food</h3>
+            <p class="text-slate-600">
+              Food businesses that depend on local discovery and tourist traffic. The challenge is standing out in a crowded local market.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-slate-600 mb-4">
+            We focus on these three industries because we understand their specific challenges and can deliver the best results.
+          </p>
+          <a href="/contact" class="inline-block px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium">
+            See If We're a Fit
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+</Layout>

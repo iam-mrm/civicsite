@@ -1,55 +1,39 @@
-export interface KeralaService {
-  id: string;
-  emoji: string;
-  title: string;
-  description: string;
-  slug: string;
-  category?: string;
-  websiteUrl?: string;
-  services?: Service[];
-}
-
-export interface LifeEvent {
-  id: string;
-  emoji: string;
-  title: string;
-  description: string;
-  slug: string;
-  category?: string;
-  services?: Service[];
-}
-
 export interface Service {
   id: string;
-  name: string;
-  description: string;
-  department: string;
-  websiteUrl?: string;
-  estimatedTime: string;
-  requiredDocuments?: string[];
-  steps?: Step[];
-}
-
-export interface Step {
-  id: string;
   title: string;
   description: string;
-  estimatedTime?: string;
-  cost?: string;
-  actionUrl?: string;
+  icon: string;
+  features: string[];
+  outcome: string;
 }
 
-export interface QuickAction {
+export interface CaseStudy {
   id: string;
-  emoji: string;
-  text: string;
-  href?: string;
+  client: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  testimonial?: string;
+  beforeMetrics?: {
+    lighthouse?: number;
+    discoverability?: string;
+  };
+  afterMetrics?: {
+    lighthouse?: number;
+    discoverability?: string;
+  };
 }
 
-export interface TrustMetric {
-  id: string;
-  value: string;
-  label: string;
+export interface ContactForm {
+  businessType: 'homestay' | 'clinic' | 'restaurant' | 'retail' | 'other';
+  websiteStatus: 'none' | 'outdated' | 'working' | 'broken';
+  primaryPain: string;
+  budget: 'under-25k' | '25k-50k' | '50k-75k' | '75k+';
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
 }
 
 export interface SiteConfig {

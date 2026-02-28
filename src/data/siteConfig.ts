@@ -1,25 +1,12 @@
-import type { SiteConfig, QuickAction, TrustMetric } from '@/types';
+import type { SiteConfig } from '@/types';
 
 export const siteConfig: SiteConfig = {
-  title: 'Kerala Government Helper - Services Made Simple',
-  description: 'Confused about government services? We explain everything in simple language that anyone can understand.',
-  url: 'https://kerala-helper.example.com',
+  title: 'Digital Infrastructure for Kerala Businesses',
+  description: 'Building the technical foundation that makes Kerala small businesses permanently discoverable on Google, Maps, and AI search.',
+  url: 'https://kerala-digital.infrastructure',
   links: {
-    twitter: 'https://twitter.com/keralahelper',
-    github: 'https://github.com/keralahelper',
-    linkedin: 'https://linkedin.com/company/keralahelper'
+    twitter: 'https://twitter.com/keraladigital',
+    github: 'https://github.com/keraladigital',
+    linkedin: 'https://linkedin.com/company/keraladigital'
   }
 };
-
-export const quickActions: QuickAction[] = [
-  { id: 'documents', emoji: '📄', text: 'Get certificates', href: '/request-documents' },
-  { id: 'appointment', emoji: '📅', text: 'Book office visit', href: '/book-appointment' },
-  { id: 'question', emoji: '💬', text: 'Ask for help', href: '/ask-question' },
-  { id: 'track', emoji: '🔔', text: 'Check application', href: '/track-application' }
-];
-
-export const trustMetrics: TrustMetric[] = [
-  { id: 'people', value: '250K+', label: 'People helped' },
-  { id: 'rating', value: '4.8★', label: 'Average rating' },
-  { id: 'support', value: '24/7', label: 'Support available' }
-];

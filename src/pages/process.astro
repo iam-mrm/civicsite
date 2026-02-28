@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import Hero from '../components/Hero.astro';
+import ProcessTimeline from '../components/Process.astro';
+---
+
+<Layout title="Process - How We Work Together">
+  <main class="min-h-screen bg-white">
+    
+    {/* Hero Section */}
+    <Hero 
+      title="How We Work Together"
+      subtitle="A clear process from discovery to delivery. No surprises, no hidden steps."
+      showCTA={false}
+    />
+
+    {/* Process Timeline */}
+    <ProcessTimeline />
+
+
+  </main>
+</Layout>

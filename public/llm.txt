@@ -1,0 +1,55 @@
+# LLM Context File
+# Digital Infrastructure Specialist for Kerala Small Businesses
+
+## Business Identity
+I am a senior digital infrastructure specialist focused exclusively on Kerala small businesses. I build complete technical foundations that make businesses permanently discoverable on Google, Maps, and AI search.
+
+## Core Service
+The Complete System - Four interconnected parts sold as one complete solution:
+1. Technical Foundation (Astro website passing all Google checks)
+2. Single Source of Truth (Sanity CMS for centralized data)
+3. Google & AI Presence (Schema markup for structured data)
+4. Lead Management (Integrated lead capture in same dashboard)
+
+## Target Clients
+Kerala small businesses in specific verticals:
+- Homestays and tourism properties
+- Clinics and healthcare practitioners  
+- Restaurants and food businesses
+- Retail and service businesses
+
+## Key Differentiators
+- Solo operation (not an agency)
+- Complete system only (no piecemeal services)
+- No ongoing retainers or contracts
+- Focus on technical infrastructure, not marketing
+- Kerala-specific expertise
+
+## What I Don't Do
+- Off-page SEO or backlink building
+- Paid advertising management
+- Social media management
+- WordPress development
+- Complex web applications
+- Maintenance contracts
+
+## Business Model
+- One-time project pricing
+- Complete system delivery
+- Quarterly check-ins (relationship-driven, not contract-driven)
+- Referral-based growth
+
+## Technical Stack
+- Astro for websites
+- Sanity CMS for content management
+- Schema.org markup for structured data
+- Google Business Profile integration
+
+## Value Proposition
+Building the technical foundation that makes Kerala small businesses permanently discoverable, permanently credible, and permanently in control of their digital presence.
+
+## Contact Process
+Discovery → Self-Diagnosis → Contrast → Enquiry → Proposal → Build → Delivery → Referral
+
+## Geographic Focus
+Kerala, India - with deep knowledge of local market and business types.

@@ -6,90 +6,116 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-  { href: '/', label: 'Guide', icon: '🏠' },
-  { href: '/guidance', label: 'Get Help', icon: '🎯' },
-  { href: '/resources', label: 'Resources', icon: '�' },
-  { href: '/contact', label: 'Contact', icon: '�' }
+  { href: '/', label: 'Home', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+  { href: '/services', label: 'The System', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { href: '/about', label: 'Philosophy', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+  { href: '/process', label: 'Pipeline', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
+  { href: '/contact', label: 'Start', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' }
 ];
 ---
 
 <!-- Mobile Menu Button -->
-<button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
-  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<button id="mobileMenuButton" class="lg:hidden fixed top-4 right-4 z-50 p-3 bg-white rounded-xl shadow-lg border border-slate-200 hover:scale-105 transition-all duration-300 group">
+  <svg class="w-6 h-6 text-slate-700 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
   </svg>
 </button>
 
 <!-- Navigation -->
-<nav id="navigation" class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-40 transform -translate-y-full md:translate-y-0 transition-transform duration-300">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between py-4">
+<nav id="navigation" class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-200 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div class="flex items-center justify-between h-20">
       
       <!-- Logo -->
-      <div class="flex items-center justify-between md:justify-start mb-4 md:mb-0">
-        <a href="/" class="flex items-center space-x-2 text-xl font-light text-gray-900">
-          <span class="text-2xl">🏛️</span>
-          <span>Civic Guide</span>
-        </a>
-        <button id="closeMobileMenu" class="md:hidden p-1">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      <a href="/" class="flex items-center gap-3 group hover:opacity-80 transition-opacity">
+        <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+          <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
           </svg>
-        </button>
-      </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg text-slate-900 leading-tight">Digital Infrastructure</span>
+          <span class="text-xs text-slate-500 font-medium">Kerala Businesses</span>
+        </div>
+      </a>
 
-      <!-- Main Navigation -->
-      <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-8">
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-1">
         {navItems.map((item) => (
           <a 
             href={item.href} 
-            class={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+            class={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group ${
               currentPath === item.href 
-                ? 'bg-blue-100 text-blue-700' 
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                ? 'bg-slate-900 text-white shadow-md' 
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
-            <span class="text-lg">{item.icon}</span>
-            <span class="font-medium">{item.label}</span>
+            <svg class={`w-4 h-4 transition-transform group-hover:scale-110 ${currentPath === item.href ? 'text-white' : 'text-slate-500 group-hover:text-slate-700'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.icon} />
+            </svg>
+            <span>{item.label}</span>
           </a>
         ))}
-      </div>
-
-      <!-- Quick Help -->
-      <div class="hidden md:flex items-center">
-        <a 
-          href="/contact" 
-          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-        >
-          Get Help Now
-        </a>
       </div>
     </div>
   </div>
 </nav>
 
 <!-- Spacer for fixed nav -->
-<div class="h-16 md:h-20"></div>
+<div class="h-20"></div>
 
 <script>
+  // Enhanced mobile menu with premium transitions
   const mobileMenuButton = document.getElementById('mobileMenuButton');
-  const closeMobileMenu = document.getElementById('closeMobileMenu');
   const navigation = document.getElementById('navigation');
+  let isMenuOpen = false;
+
+  function toggleMenu() {
+    if (isMenuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
 
   function openMenu() {
-    navigation?.classList.remove('-translate-y-full');
-    navigation?.classList.add('translate-y-0');
+    navigation?.classList.remove('-translate-x-full');
+    navigation?.classList.add('translate-x-0');
+    document.body.style.overflow = 'hidden';
+    // Add backdrop blur
+    document.body.classList.add('backdrop-blur-sm');
+    isMenuOpen = true;
+    
+    // Change button to X icon
+    if (mobileMenuButton) {
+      mobileMenuButton.innerHTML = `
+        <svg class="w-6 h-6 text-slate-700 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      `;
+    }
   }
 
   function closeMenu() {
-    navigation?.classList.add('-translate-y-full');
-    navigation?.classList.remove('translate-y-0');
+    navigation?.classList.add('-translate-x-full');
+    navigation?.classList.remove('translate-x-0');
+    document.body.style.overflow = '';
+    document.body.classList.remove('backdrop-blur-sm');
+    isMenuOpen = false;
+    
+    // Change button back to hamburger icon
+    if (mobileMenuButton) {
+      mobileMenuButton.innerHTML = `
+        <svg class="w-6 h-6 text-slate-700 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      `;
+    }
   }
 
-  mobileMenuButton?.addEventListener('click', openMenu);
-  closeMobileMenu?.addEventListener('click', closeMenu);
+  mobileMenuButton?.addEventListener('click', toggleMenu);
 
-  // Close menu when clicking outside
+  // Close menu when clicking outside with enhanced detection
   document.addEventListener('click', (e) => {
     if (navigation && !navigation.contains(e.target as Node) && !mobileMenuButton?.contains(e.target as Node)) {
       closeMenu();
@@ -102,4 +128,151 @@ const navItems = [
       closeMenu();
     }
   });
+
+  // Premium smooth scroll behavior for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href')?.slice(1);
+      const targetElement = document.getElementById(targetId || '');
+      
+      if (targetElement) {
+        // Close mobile menu if open
+        if (navigation?.classList.contains('translate-x-0')) {
+          closeMenu();
+        }
+        
+        // Smooth scroll with offset for fixed nav
+        const navHeight = 96; // h-24 = 6rem = 96px
+        const targetPosition = targetElement.offsetTop - navHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Enhanced scroll-based navigation with premium effects
+  let lastScrollY = 0;
+  let ticking = false;
+  
+  function updateNavigation() {
+    const currentScrollY = window.scrollY;
+    const nav = document.getElementById('navigation') as HTMLElement;
+    
+    if (nav) {
+      // Add scrolled state with backdrop blur
+      if (currentScrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      
+      // Smart hide/show on scroll with threshold
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+    }
+    
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+  
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateNavigation);
+      ticking = true;
+    }
+  });
+  
+  // Add magnetic effect to logo on hover
+  const logo = document.querySelector('a[href="/"]') as HTMLElement;
+  if (logo) {
+    logo.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = logo.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      logo.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+    });
+    
+    logo.addEventListener('mouseleave', () => {
+      logo.style.transform = '';
+    });
+  }
 </script>
+
+<style>
+  /* Desktop navigation scrolled state */
+  #navigation.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 1024px) {
+    #navigation {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.12);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 50;
+    }
+    
+    #navigation.translate-x-0 {
+      transform: translateX(0);
+    }
+    
+    #navigation.-translate-x-full {
+      transform: translateX(-100%);
+    }
+    
+    /* Mobile menu content layout */
+    #navigation .max-w-7xl {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Show desktop navigation items in mobile menu */
+    #navigation .hidden.lg\:flex {
+      display: flex !important;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    #navigation .hidden.lg\:flex a {
+      justify-content: center;
+      font-size: 1.25rem;
+      padding: 1rem;
+    }
+    
+    /* Hide logo text in mobile menu */
+    #navigation .flex.flex-col {
+      display: none;
+    }
+  }
+  
+  /* Premium backdrop blur for body when menu is open */
+  body.backdrop-blur-sm::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    z-index: 40;
+  }
+</style>
