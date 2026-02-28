@@ -1,4 +1,4 @@
-import type { SEOProps } from '@/types';
+import type { SEOProps } from '@/pages/types';
 
 /**
  * Generate structured data for SEO

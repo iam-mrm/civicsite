@@ -162,7 +162,7 @@ const navItems = [
     const currentScrollY = window.scrollY;
     const nav = document.getElementById('navigation') as HTMLElement;
     
-    if (nav) {
+    if (nav && !isMenuOpen) {
       // Add scrolled state with backdrop blur
       if (currentScrollY > 50) {
         nav.classList.add('scrolled');
@@ -170,11 +170,13 @@ const navItems = [
         nav.classList.remove('scrolled');
       }
       
-      // Smart hide/show on scroll with threshold
-      if (currentScrollY > lastScrollY && currentScrollY > 200) {
-        nav.style.transform = 'translateY(-100%)';
-      } else {
-        nav.style.transform = 'translateY(0)';
+      // Smart hide/show on scroll with threshold - only on desktop
+      if (window.innerWidth >= 1024) {
+        if (currentScrollY > lastScrollY && currentScrollY > 200) {
+          nav.style.transform = 'translateY(-100%)';
+        } else {
+          nav.style.transform = 'translateY(0)';
+        }
       }
     }
     
@@ -186,6 +188,13 @@ const navItems = [
     if (!ticking) {
       requestAnimationFrame(updateNavigation);
       ticking = true;
+    }
+  });
+  
+  // Handle window resize to reset mobile menu state
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024 && isMenuOpen) {
+      closeMenu();
     }
   });
   

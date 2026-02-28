@@ -1,4 +1,4 @@
-import type { KeralaService } from '@/types';
+import type { KeralaService } from '@/pages/types';
 
 export const keralaServices: KeralaService[] = [
   {

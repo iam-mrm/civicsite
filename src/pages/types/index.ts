@@ -7,6 +7,32 @@ export interface Service {
   outcome: string;
 }
 
+export interface KeralaService {
+  id: string;
+  emoji: string;
+  title: string;
+  description: string;
+  slug: string;
+  category: string;
+  websiteUrl: string;
+  services: Array<{
+    id: string;
+    name: string;
+    description: string;
+    department: string;
+    websiteUrl: string;
+    estimatedTime: string;
+    requiredDocuments: string[];
+    steps: Array<{
+      id: string;
+      title: string;
+      description: string;
+      actionUrl?: string;
+      estimatedTime: string;
+    }>;
+  }>;
+}
+
 export interface CaseStudy {
   id: string;
   client: string;
